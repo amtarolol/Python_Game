@@ -1,0 +1,25 @@
+[
+    {
+        "color": "#ffa0a0a4",
+        "id": 1,
+        "members": [
+            {
+                "name": "type",
+                "type": "string",
+                "value": "collision"
+            }
+        ],
+        "name": "type",
+        "type": "class",
+        "useAs": [
+            "property",
+            "map",
+            "layer",
+            "object",
+            "tile",
+            "tileset",
+            "wangcolor",
+            "wangset"
+        ]
+    }
+]
