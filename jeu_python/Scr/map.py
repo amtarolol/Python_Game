@@ -119,6 +119,10 @@ class MapManager:
         for monster in monsters:
             group.add(monster)
         
+        for monster in monsters:
+            if monster.health <= 0:
+                group.remove(monster)
+        
         for projectile in self.player.all_projectiles:
             group.add(projectile)
         
@@ -154,7 +158,8 @@ class MapManager:
         self.get_group().draw(self.screen)
         self.get_group().center(self.player.rect.center)
         for monster in self.get_map().monsters:
-            self.draw_health_bar(monster)
+            if monster.health <= 0:
+                self.draw_health_bar(monster)
 
         for projectile in self.player.all_projectiles:
             projectile.rect.x = projectile.position[0]
@@ -162,13 +167,6 @@ class MapManager:
             projectile.animate() 
             self.screen.blit(projectile.image, projectile.rect)
 
-    def kill_monster(self):
-        for map in self.maps:
-            map_data = self.maps[map]
-            monsters = map_data.monsters
-        for monster in monsters:
-            if monster.health <= 0:
-                monster.remove()
 
     def draw_health_bar(self, entity):
         # Calcule la position de la barre de vie
@@ -185,29 +183,44 @@ class MapManager:
     def update(self):
         self.get_group().update()
         self.check_collisions()
+
+        # Liste temporaire pour stocker les monstres morts
+        dead_monsters = []
         
         for monster in self.get_map().monsters:
-            self.draw_health_bar(monster)
-            monster.collisions_monster(self.get_walls(), self.player)
-            monster.animate()
-            self.kill_monster()
+            if monster.health <= 0:
+                # Ajoutez d'abord les monstres morts à la liste
+                dead_monsters.append(monster)
+            else:
+                # Mettez à jour et animez les monstres vivants
+                self.draw_health_bar(monster)
+                monster.collisions_monster(self.get_walls(), self.player)
+                monster.animate()
+
+        for monster in dead_monsters:
+            self.get_group().remove(monster)
+            # Supprimez également le monstre de la liste des monstres de la carte
+            self.get_map().monsters.remove(monster)
 
         # Met à jour les positions des projectiles et vérifie les collisions avec les monstres
         for projectile in self.player.all_projectiles:
             # Vérification de la collision avec les monstres
-            for monster in self.get_map().monsters[:]:
-                dx = monster.rect.centerx - projectile.rect.centerx
-                dy = monster.rect.centery - projectile.rect.centery
-                distance = max(math.sqrt(dx ** 2 + dy ** 2), 1)
-                direction = (dx / distance, dy / distance)
-                projectile.move(direction)
+            if len(self.get_map().monsters[:]) > 0:
+                for monster in self.get_map().monsters[:]:
+                    dx = monster.rect.centerx - projectile.rect.centerx
+                    dy = monster.rect.centery - projectile.rect.centery
+                    distance = max(math.sqrt(dx ** 2 + dy ** 2), 1)
+                    direction = (dx / distance, dy / distance)
+                    projectile.move(direction)
 
-                if monster.rect.colliderect(projectile.rect):
-                    # Modifie la santé du monstre ou retire le projectile si une collision est détectée
-                    monster.health -= projectile.damage
-                    self.player.all_projectiles.remove(projectile)
-                    break
-
+                    if monster.rect.colliderect(projectile.rect):
+                        # Modifie la santé du monstre ou retire le projectile si une collision est détectée
+                        monster.health -= projectile.damage
+                        self.player.all_projectiles.remove(projectile)
+                        break
+            else:
+                projectile.rect.centerx += projectile.velocity
+                
             # Supprime le projectile si hors de l'écran
             if (projectile.rect.x < 0 or projectile.rect.x > self.screen.get_width() or
                 projectile.rect.y < 0 or projectile.rect.y > self.screen.get_height()):

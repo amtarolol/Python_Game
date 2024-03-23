@@ -4,7 +4,7 @@ import os
 current_directory = os.path.dirname(os.path.abspath(__file__))
 os.chdir(current_directory)
 
-class Monster(pygame.sprite.Sprite,):
+class Monster(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.position = [0, 0]
@@ -37,6 +37,9 @@ class Monster(pygame.sprite.Sprite,):
             point = tmx_data.get_object_by_name("monster")
             return pygame.Rect(point.x, point.y, point.width, point.height)
     def update(self):
+        if self.health <= 0:
+            self.kill()  # Supprimer le monstre du groupe de sprites s'il n'a plus de points de vie
+            return
         self.rect.topleft = self.position
         self.feet.midbottom = self.rect.midbottom
 
