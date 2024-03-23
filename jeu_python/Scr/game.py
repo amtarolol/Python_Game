@@ -22,19 +22,13 @@ class Game:
         self.map_manager = MapManager(self.screen, self.player)
         self.monsters = self.map_manager.get_map().monsters
         self.dialog_box = DialogBox()
+        
        # self.spawn_monster()
         # Barre de sorts
         spell_icons = {
             "fireball": pygame.image.load("../sort/spell_bar/feu.PNG")
         }
         self.spell_bar = SpellBar(self.screen, spell_icons)
-
-
-    def kill_monster(self):
-        for monster in self.monsters:
-            if monster.health <= 0:
-                monster.remove()
-
 
     def handle_input(self):
         pressed = pygame.key.get_pressed()
@@ -63,6 +57,7 @@ class Game:
             self.player.save_location()
             self.handle_input()
             self.update()
+
             # Mise à jour de la barre de sorts
             self.spell_bar.update()
 
@@ -82,6 +77,12 @@ class Game:
             self.all_projectiles.draw(self.screen)
             for monster in self.monsters:
                 self.player.check_collision(monster)
+                pygame.draw.rect(self.screen, (0, 255, 0), monster.rect, 2)  # Rectangle vert
+                pygame.draw.rect(self.screen, (255, 0, 0), monster.feet, 2)  # Rectangle rouge pour les pieds   
+
+            for wall in self.map_manager.get_walls():
+                pygame.draw.rect(self.screen, (0, 0, 255), wall, 2)
+
 
             # Réinitialiser l'écran
             pygame.display.flip()
@@ -98,10 +99,8 @@ class Game:
                         # Vérifie le cooldown avant de lancer une boule de feu
                         if self.player.cd == 0:
                             self.player.shoot()
-                            for monster in self.monsters:
-                                self.kill_monster()
                             # Défini le cooldown à 2 secondes (120 trames à 60 FPS)
-                            self.player.cd = 120
+                            self.player.cd = 30
                      
             clock.tick(70)
 

@@ -8,7 +8,7 @@ class Projectile(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
         self.position =[x, y]
-        self.velocity = 5
+        self.velocity = 10
         self.damage = 50
         self.images = self.load_animation_images()
         self.image = self.images[0]  # Initialiser avec la première image
