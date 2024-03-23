@@ -4,18 +4,23 @@ from map import MapManager
 from player import Player
 from spell_bar import SpellBar
 import os
-
+from ecran_accueil import EcranAccueil
 
 # répertoire du script actuel
 current_directory = os.path.dirname(os.path.abspath(__file__))
 
 # répertoire de travail pour inclure le dossier parent 
 os.chdir(current_directory)
+
 class Game:
     def __init__(self):
+        # initialisation de pygame
+        pygame.init()
+        self.clock = pygame.time.Clock()
         # fenetre de jeux
-        self.screen = pygame.display.set_mode((0,0), pygame.RESIZABLE)
+        self.screen = pygame.display.set_mode((0,0), pygame.RESIZABLE | pygame.SRCALPHA)
         pygame.display.set_caption('Dream Land')
+
         # generer un joueur
         self.player = Player()
         self.all_projectiles = pygame.sprite.Group()
@@ -23,7 +28,6 @@ class Game:
         self.monsters = self.map_manager.get_map().monsters
         self.dialog_box = DialogBox()
         
-       # self.spawn_monster()
         # Barre de sorts
         spell_icons = {
             "fireball": pygame.image.load("../sort/spell_bar/feu.PNG")
@@ -44,16 +48,16 @@ class Game:
 
     def update(self):
         self.map_manager.update()
-         
-        
-    def run(self):
 
+    def run(self):
         clock = pygame.time.Clock()
+        # Afficher l'écran d'accueil
+        ecran_accueil = EcranAccueil(self.screen)
+        ecran_accueil.run()
+
         # boucle du jeu
         running = True
-
         while running:
-            
             self.player.save_location()
             self.handle_input()
             self.update()
@@ -83,7 +87,6 @@ class Game:
             for wall in self.map_manager.get_walls():
                 pygame.draw.rect(self.screen, (0, 0, 255), wall, 2)
 
-
             # Réinitialiser l'écran
             pygame.display.flip()
 
@@ -91,18 +94,20 @@ class Game:
                 if event.type == pygame.QUIT:
                     running = False
                 elif event.type == pygame.KEYDOWN:
-
                     if event.key == pygame.K_e:
                         self.map_manager.check_npc_collisions(self.dialog_box)
-                        
-                    elif pygame.key.get_pressed()[pygame.K_a]:
+                    elif event.key == pygame.K_a:
                         # Vérifie le cooldown avant de lancer une boule de feu
                         if self.player.cd == 0:
                             self.player.shoot()
                             # Défini le cooldown à 2 secondes (120 trames à 60 FPS)
                             self.player.cd = 30
-                     
+                            
             clock.tick(70)
 
         pygame.quit()
 
+# Lancer le jeu
+if __name__ == "__main__":
+    game = Game()
+    game.run()
