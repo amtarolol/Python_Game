@@ -51,9 +51,7 @@ class Game:
 
     def run(self):
         clock = pygame.time.Clock()
-        # Afficher l'écran d'accueil
-        ecran_accueil = EcranAccueil(self.screen)
-        ecran_accueil.run()
+
 
         # boucle du jeu
         running = True
@@ -103,7 +101,7 @@ class Game:
                             # Défini le cooldown à 2 secondes (120 trames à 60 FPS)
                             self.player.cd = 30
                             
-            clock.tick(70)
+            clock.tick(80)
 
         pygame.quit()
 
