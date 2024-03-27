@@ -62,7 +62,6 @@ class Player(Entity):
         self.current_frame = 0
         self.all_projectiles = pygame.sprite.Group()
         self.cd = 0.0
-  
 
 
     def shoot(self):

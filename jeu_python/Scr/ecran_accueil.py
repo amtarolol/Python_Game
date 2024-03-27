@@ -118,7 +118,7 @@ class Particle:
         self.vx = random.uniform(-0.5, 0.5)  # Vitesse horizontale aléatoire
         self.vy = random.uniform(-0.08, -0.15)  # Vitesse verticale vers le haut, plus légère
         self.gravity = 0.01  # Gravité ascendante réduite
-        self.color = (random.randint(190, 255), random.randint(190, 255), random.randint(190, 255), random.randint(60, 85)) 
+        self.color = (random.randint(220, 255), random.randint(180, 255), random.randint(180, 255), random.randint(55, 85)) 
         self.size = random.randint(2, 4)  # Taille légèrement variable
 
     def update(self, screen_height):

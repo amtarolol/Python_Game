@@ -158,7 +158,7 @@ class MapManager:
         self.get_group().draw(self.screen)
         self.get_group().center(self.player.rect.center)
         for monster in self.get_map().monsters:
-            if monster.health <= 0:
+            if monster.health > 0:
                 self.draw_health_bar(monster)
 
         for projectile in self.player.all_projectiles:
@@ -179,6 +179,23 @@ class MapManager:
         bar_length = int(bar_width * health_ratio)
         # Dessine la barre de vie
         pygame.draw.rect(self.screen, (0, 255, 0), (bar_x, bar_y, bar_length, bar_height))
+
+    ########################################################################################
+    ###########################    DEBUG VISUEL     ########################################
+    ########################################################################################
+
+    def draw_collisions(self):
+        for monster in self.get_map().monsters:
+            pygame.draw.rect(self.screen, (0, 255, 0), monster.rect, 2)  # Rectangle vert
+            pygame.draw.rect(self.screen, (255, 0, 0), monster.feet, 2)  # Rectangle rouge pour les pieds
+
+        for wall in self.get_walls():
+            pygame.draw.rect(self.screen, (0, 0, 255), wall, 2)
+    
+    ########################################################################################
+    ###########################    DEBUG VISUEL     ########################################
+    ########################################################################################
+
 
     def update(self):
         self.get_group().update()
@@ -219,7 +236,7 @@ class MapManager:
                         self.player.all_projectiles.remove(projectile)
                         break
             else:
-                projectile.rect.centerx += projectile.velocity
+                projectile.move()
                 
             # Supprime le projectile si hors de l'écran
             if (projectile.rect.x < 0 or projectile.rect.x > self.screen.get_width() or

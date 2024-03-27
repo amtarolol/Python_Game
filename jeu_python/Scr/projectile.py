@@ -46,10 +46,14 @@ class Projectile(pygame.sprite.Sprite):
 
 
 
-    def move(self, direction):
-        # Utilise la direction pour déplacer le projectile vers le monstre
-        self.position[0] += self.velocity * direction[0]
-        self.position[1] += self.velocity * direction[1]
-        self.rect.topleft = self.position
+    def move(self, direction=None):
+        if direction:
+            # Utilise la direction pour déplacer le projectile vers le monstre
+            self.position[0] += self.velocity * direction[0]
+            self.position[1] += self.velocity * direction[1]
+            self.rect.topleft = self.position
+        else:
+            self.position[0] += self.velocity
+            self.rect.topleft = self.position
 
 #        self.rotate()

@@ -4,7 +4,6 @@ from map import MapManager
 from player import Player
 from spell_bar import SpellBar
 import os
-from ecran_accueil import EcranAccueil
 
 # répertoire du script actuel
 current_directory = os.path.dirname(os.path.abspath(__file__))
@@ -18,7 +17,7 @@ class Game:
         pygame.init()
         self.clock = pygame.time.Clock()
         # fenetre de jeux
-        self.screen = pygame.display.set_mode((0,0), pygame.RESIZABLE | pygame.SRCALPHA)
+        self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN | pygame.SRCALPHA)
         pygame.display.set_caption('Dream Land')
 
         # generer un joueur
@@ -30,9 +29,12 @@ class Game:
         
         # Barre de sorts
         spell_icons = {
-            "fireball": pygame.image.load("../sort/spell_bar/feu.PNG")
+            "fireball": pygame.image.load("../sort/spell_bar/feu.PNG"),
+            "iceball": pygame.image.load("../sort/spell_bar/glace.JPG"),
+            "lave": pygame.image.load("../sort/spell_bar/lave.JPG")
         }
         self.spell_bar = SpellBar(self.screen, spell_icons)
+
 
     def handle_input(self):
         pressed = pygame.key.get_pressed()
@@ -52,7 +54,6 @@ class Game:
     def run(self):
         clock = pygame.time.Clock()
 
-
         # boucle du jeu
         running = True
         while running:
@@ -60,30 +61,27 @@ class Game:
             self.handle_input()
             self.update()
 
-            # Mise à jour de la barre de sorts
-            self.spell_bar.update()
-
             # Mise à jour du cooldown de la boule de feu
             if self.player.cd > 0:
                 self.player.cd -= 1
 
             #dessine map, plus rectangle collisison perso et la dialog box
             self.map_manager.draw()
+            self.map_manager.draw_collisions()
             self.dialog_box.render(self.screen)   
 
             # Affichage des coordonnées du joueur à l'écran
             text_font = pygame.font.Font(None, 36)
             text = text_font.render(f"Player: {self.player.position}", True, (255, 255, 255))
             self.screen.blit(text, (10, 10))  # Affiche les coordonnées en haut à gauche
+            
+            # Dessiner la barre de sorts
+            self.spell_bar.draw_spell_bar()
+            self.spell_bar.select_spell("iceball",self.player.cd)
 
             self.all_projectiles.draw(self.screen)
             for monster in self.monsters:
-                self.player.check_collision(monster)
-                pygame.draw.rect(self.screen, (0, 255, 0), monster.rect, 2)  # Rectangle vert
-                pygame.draw.rect(self.screen, (255, 0, 0), monster.feet, 2)  # Rectangle rouge pour les pieds   
-
-            for wall in self.map_manager.get_walls():
-                pygame.draw.rect(self.screen, (0, 0, 255), wall, 2)
+                self.player.check_collision(monster)   
 
             # Réinitialiser l'écran
             pygame.display.flip()
@@ -99,7 +97,8 @@ class Game:
                         if self.player.cd == 0:
                             self.player.shoot()
                             # Défini le cooldown à 2 secondes (120 trames à 60 FPS)
-                            self.player.cd = 30
+                            self.player.cd = 80
+                        
                             
             clock.tick(80)
 
