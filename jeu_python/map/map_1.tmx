@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="15" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="20" nextobjectid="21">
+<map version="1.8" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="15" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="20" nextobjectid="22">
  <tileset firstgid="1" source="carte_Dofus_2D.tsx"/>
- <tileset firstgid="181" name="ciel_1" tilewidth="32" tileheight="32" tilecount="84" columns="21">
-  <image source="../tuiles map/ciel/ciel_1.png" trans="000000" width="700" height="150"/>
+ <tileset firstgid="181" name="ciel_1" tilewidth="32" tileheight="32" tilecount="1395" columns="93">
+  <image source="../tuiles map/ciel/ciel_1.png" trans="000000" width="2980" height="500"/>
  </tileset>
- <tileset firstgid="265" name="ciel_all" tilewidth="32" tileheight="32" tilecount="300" columns="15">
+ <tileset firstgid="1576" name="ciel_all" tilewidth="32" tileheight="32" tilecount="300" columns="15">
   <image source="../tuiles map/ciel/ciel_all.png" trans="000000" width="500" height="650"/>
   <tile id="0">
    <animation>
@@ -412,10 +412,10 @@
    </animation>
   </tile>
  </tileset>
- <tileset firstgid="565" name="ciel_2" tilewidth="32" tileheight="32" tilecount="84" columns="21">
+ <tileset firstgid="1876" name="ciel_2" tilewidth="32" tileheight="32" tilecount="84" columns="21">
   <image source="../tuiles map/ciel/ciel_2.png" trans="000000" width="700" height="150"/>
  </tileset>
- <tileset firstgid="649" source="../tuiles map/donjon/dungeon.tsx"/>
+ <tileset firstgid="1960" source="../tuiles map/donjon/dungeon.tsx"/>
  <layer id="2" name="herbe" width="15" height="15" locked="1">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -456,9 +456,9 @@
  </layer>
  <layer id="7" name="ciel" width="15" height="15" tintcolor="#eafffd">
   <data encoding="csv">
-325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,
-340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,
-355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,
+1636,1637,1638,1639,1640,1641,1642,1643,1644,1645,1646,1647,1648,1649,1650,
+1651,1652,1653,1654,1655,1656,1657,1658,1659,1660,1661,1662,1663,1664,1665,
+1666,1667,1668,1669,1670,1671,1672,1673,1674,1675,1676,1677,1678,1679,1680,
 82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -536,10 +536,10 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,660,0,0,0,0,0,0,
-0,660,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,1971,0,0,0,0,0,0,
+0,1971,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,660,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1971,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,2684354563,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -564,5 +564,8 @@
  <objectgroup id="19" name="NPC_Path">
   <object id="19" name="paul_path1" x="287.638" y="351.234" width="32.0895" height="32.6729"/>
   <object id="20" name="paul_path2" x="191.953" y="351.817" width="32.0895" height="32.0895"/>
+  <object id="21" name="monster" x="138.667" y="381.333">
+   <point/>
+  </object>
  </objectgroup>
 </map>

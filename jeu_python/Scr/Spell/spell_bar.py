@@ -44,7 +44,7 @@ class SpellBar:
                 cooldown_percentage = 1 - (self.cooldowns[spell] / self.max_cooldown_time)
                 self.cooldown_bar_width = part_width * cooldown_percentage
                 cooldown_bar_rect = pygame.Rect(spell_rect.left, spell_rect.top, self.cooldown_bar_width, bar_height)
-                cooldown_bar_surface = pygame.Surface((self.cooldown_bar_width, bar_height), pygame.SRCALPHA)
+                cooldown_bar_surface = pygame.Surface((self.cooldown_bar_width-20, bar_height-20), pygame.SRCALPHA)
                 cooldown_bar_surface.set_alpha(self.cooldown_bar_alpha)  
                 pygame.draw.rect(cooldown_bar_surface, self.cooldown_bar_color, cooldown_bar_surface.get_rect())  
                 self.screen.blit(cooldown_bar_surface, cooldown_bar_rect)

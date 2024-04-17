@@ -1,7 +1,7 @@
 import pygame
 
-from animation import AnimateSprite
-from projectile import Projectile
+from Player_pnj.animation import AnimateSprite
+from Spell.projectile import Fire_ball
 import os
 
 # répertoire du script actuel
@@ -63,12 +63,14 @@ class Player(Entity):
         self.all_projectiles = pygame.sprite.Group()
         self.cd = 0.0
 
-
-    def shoot(self):
-        # Lorsque le joueur tire, créez un projectile en passant ses coordonnées actuelles
-        projectile = Projectile(self.position[0], self.position[1])
-        # Ajoute le projectile au groupe des projectiles du joueur
+    def shoot(self, orientation, map_manager):
+        # Récupérer les coordonnées et le rectangle de collision du joueur sur l'écran
+        player_screen_x, player_screen_y, player_screen_rect = map_manager.entity_position_and_rect(map_manager.player)
+        # Utiliser les coordonnées du joueur sur l'écran pour le tir
+        projectile = Fire_ball(player_screen_x, player_screen_y, orientation)
+        # Ajouter le projectile au groupe des projectiles du joueur
         self.all_projectiles.add(projectile)
+
 
     def check_collision(self, monster):
         collision_rect = monster.rect.copy()  # Copier le rectangle de collision du monstre
@@ -124,9 +126,3 @@ class NPC(Entity):
             point = tmx_data.get_object_by_name(f'{self.name}_path{num}')
             rect = pygame.Rect(point.x, point.y, point.width, point.height)
             self.points.append(rect)
-
-
-
-
-
-

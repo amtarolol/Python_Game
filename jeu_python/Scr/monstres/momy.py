@@ -4,7 +4,7 @@ import os
 current_directory = os.path.dirname(os.path.abspath(__file__))
 os.chdir(current_directory)
 
-class Monster(pygame.sprite.Sprite):
+class Mommy(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.position = [0, 0]
@@ -27,8 +27,8 @@ class Monster(pygame.sprite.Sprite):
         self.rect.x =  self.position[0]
         self.rect.y = self.position[1]
         self.feet = pygame.Rect(0, 0, self.rect.width * 0.5, 12)
-        self.speedx = 1.5
-        self.speedy = 1.5
+        self.speedx = 1.1
+        self.speedy = 1.1
         self.feet.midbottom = self.rect.midbottom
         self.old_position = self.position.copy()
 
@@ -37,9 +37,6 @@ class Monster(pygame.sprite.Sprite):
             point = tmx_data.get_object_by_name("monster")
             return pygame.Rect(point.x, point.y, point.width, point.height)
     def update(self):
-        if self.health <= 0:
-            self.kill()  # Supprimer le monstre du groupe de sprites s'il n'a plus de points de vie
-            return
         self.rect.topleft = self.position
         self.feet.midbottom = self.rect.midbottom
 
@@ -71,7 +68,7 @@ class Monster(pygame.sprite.Sprite):
                 new_rect.midbottom = (new_x, new_y)
                 new_feet_rect.midbottom = (new_x, new_y)
 
-        if new_rect.x <= 0 or new_rect.x >= 1500:
+        if new_rect.x <= 0:
             self.speedx = -self.speedx
             self.moving_left = not self.moving_left
             self.animation_index = 0 

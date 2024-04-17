@@ -1,0 +1,42 @@
+
+################################################################################################
+Maj terminées:  
+    -   Ajout de rectangles de collision pour une interaction plus précise:
+    Fait
+    -   Disparition du monstre lorsque sa vie est descend à 0:
+    Fait
+    -   Conception d'une fenêtre d'accueil dédiée pour faciliter le lancement du jeu:
+    Fait
+    -   Introduction d'une barre de sorts pour une meilleure gestion des compétences:
+    Fait
+    -   Création de divers types de monstres pour varier les rencontres:
+    Fait
+    -   Adaptabilité taille écran:
+    Fait
+################################################################################################
+################################################################################################
+Maj à faire:  
+    -   Prévisualisation spell:
+    Fait
+    -   Changer façons lancer spell:
+    Fait
+    -   Intégration de nouveaux sorts pour enrichir l'expérience de jeu:
+    En cours
+    -   Recréer monstre morts quand on revient sur la map:
+    En cours
+    -   Continuer l'histoire du jeu (plus de dialogs, zone ouvertes a certaines conditions):
+    En cours
+    -   Ajout de notion d'expérience et level + caractéristique + spell dispo en fonction du lvl:
+    En cours
+    -   Ajout inventaire:
+    En cours
+    -   Ajout drop:
+    En cours
+    -   Système de sauvegarde:
+    En cours
+    -   Création nouvelles maps:
+    En cours
+################################################################################################
+
+
+Les mises à jour sont organisées dans l'ordre de priorité ; je débuterai par celle située en haut de la liste et conclurai par celle en bas.

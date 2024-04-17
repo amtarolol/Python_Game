@@ -1,9 +1,10 @@
 import pygame, pytmx, pyscroll
 from dataclasses import dataclass
-from player import NPC
-from monster import Monster
+from Player_pnj.player import NPC
+from monstres.momy import Mommy
+from monstres.slime import Slime
+import random
 import os
-import math
 
 # répertoire du script actuel
 current_directory = os.path.dirname(os.path.abspath(__file__))
@@ -25,24 +26,25 @@ class Map:
     tmx_data: pytmx.TiledMap
     portals: list[Portal]
     npcs: list[NPC]
-    monsters: list[Monster]
-
+    monsters: list[Mommy]
 
 class MapManager:
 
     def __init__(self, screen, player):
+        # Générez les monstres et ajoutez-les à la liste des monstres
+        
         self.maps = dict()
         self.screen = screen
         self.player = player
         self.current_map = "future_map_1"
-
         self.register_map(self.current_map, portals=[
             Portal(from_world=self.current_map, origin_point="map_suivante", target_world="map_2", teleport_point="spawn_map_suivante")
         ], npcs=[
             NPC("paul", nb_points=2, dialog=["Jeune aventurier tu est le bienvenue.","Bienvenue à 'Dream Land'.",
                                              "Prépare toi à affronter des monstres terribles."])
         ,], monsters=[
-          Monster()  
+        Mommy(),
+        *[Slime(random.randint(1, 5)) for _ in range(random.randint(1, 5))]  
         ])
         self.register_map("map_2", portals=[
             Portal(from_world="map_2", origin_point="go_map_1", target_world="future_map_1", teleport_point="spawn_map_1" ),
@@ -86,13 +88,10 @@ class MapManager:
                     sprite.speed = 0
                 else:
                     sprite.speed = 0.5
-            if type(sprite) is not (Monster):            
+            if type(sprite) is not (Mommy):            
                 if sprite.feet.collidelist(self.get_walls()) > -1:
                     sprite.move_back()
             
-            
-
-
     def register_map(self, name, portals=[], npcs=[], monsters=[]):
         # charger la carte (tmx)
         tmx_data = pytmx.util_pygame.load_pygame(f'../map/{name}.tmx')
@@ -110,7 +109,7 @@ class MapManager:
                 walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
 
         # dessine le groupe de calques
-        group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=5)
+        group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=2)
         group.add(self.player)
 
         for npc in npcs:
@@ -137,6 +136,21 @@ class MapManager:
 
     def get_object(self, name): return self.get_map().tmx_data.get_object_by_name(name)
 
+    def entity_position_and_rect(self, entity):
+        # Récupérer les coordonnées de l'entité sur la carte
+        entity_map_position = entity.position
+        # Récupérer les coordonnées du rectangle de collision de l'entité sur la carte
+        entity_map_rect = entity.rect
+        # Récupérer la position de la caméra par rapport à la carte
+        camera_map_position = self.get_group().view.topleft  # Récupérer le coin supérieur gauche de la caméra
+        # Calculer la position de l'entité sur l'écran
+        entity_screen_x = entity_map_position[0] - camera_map_position[0]
+        entity_screen_y = entity_map_position[1] - camera_map_position[1]
+        # Calculer le rectangle de collision de l'entité sur l'écran
+        entity_screen_rect = entity_map_rect.move(-camera_map_position[0], -camera_map_position[1])
+        # Retourner les coordonnées de l'entité sur l'écran et son rectangle de collision
+        return entity_screen_x, entity_screen_y, entity_screen_rect
+    
     def teleport_npcs(self):
         for map in self.maps:
             map_data = self.maps[map]
@@ -157,6 +171,7 @@ class MapManager:
     def draw(self):
         self.get_group().draw(self.screen)
         self.get_group().center(self.player.rect.center)
+        self.draw_health_bar(self.player)
         for monster in self.get_map().monsters:
             if monster.health > 0:
                 self.draw_health_bar(monster)
@@ -167,17 +182,19 @@ class MapManager:
             projectile.animate() 
             self.screen.blit(projectile.image, projectile.rect)
 
-
     def draw_health_bar(self, entity):
         # Calcule la position de la barre de vie
-        bar_width = entity.rect.width
+        entity_rect = self.entity_position_and_rect(entity)[-1]
+        bar_width = entity_rect.width
         bar_height = 5
-        bar_x = entity.rect.x
-        bar_y = entity.rect.y - bar_height - 5
+        bar_x = entity_rect.x
+        bar_y = entity_rect.y - bar_height - 7
         # Calcule la longueur de la barre de vie en fonction de la santé de l'entité
         health_ratio = entity.health / entity.max_health
         bar_length = int(bar_width * health_ratio)
+        bar_length_max = int(bar_width * (entity.max_health / entity.max_health))
         # Dessine la barre de vie
+        pygame.draw.rect(self.screen, (0, 0, 0), (bar_x, bar_y, bar_length_max, bar_height))
         pygame.draw.rect(self.screen, (0, 255, 0), (bar_x, bar_y, bar_length, bar_height))
 
     ########################################################################################
@@ -186,11 +203,18 @@ class MapManager:
 
     def draw_collisions(self):
         for monster in self.get_map().monsters:
-            pygame.draw.rect(self.screen, (0, 255, 0), monster.rect, 2)  # Rectangle vert
-            pygame.draw.rect(self.screen, (255, 0, 0), monster.feet, 2)  # Rectangle rouge pour les pieds
+            monster_rect = self.entity_position_and_rect(monster)[-1]
+            pygame.draw.rect(self.screen, (0, 255, 0), monster_rect, 2)
 
         for wall in self.get_walls():
             pygame.draw.rect(self.screen, (0, 0, 255), wall, 2)
+
+    def draw_spell_range(self, max_range):
+        player_rect = self.entity_position_and_rect(self.player)[-1]
+        max_range = max_range
+        player_center_x = player_rect.x + player_rect.width / 2
+        player_center_y =player_rect.y + player_rect.height / 2
+        pygame.draw.circle(self.screen, (255, 0, 0), (int(player_center_x), int(player_center_y)), max_range, 1)
     
     ########################################################################################
     ###########################    DEBUG VISUEL     ########################################
@@ -200,7 +224,6 @@ class MapManager:
     def update(self):
         self.get_group().update()
         self.check_collisions()
-
         # Liste temporaire pour stocker les monstres morts
         dead_monsters = []
         
@@ -218,30 +241,6 @@ class MapManager:
             self.get_group().remove(monster)
             # Supprimez également le monstre de la liste des monstres de la carte
             self.get_map().monsters.remove(monster)
-
-        # Met à jour les positions des projectiles et vérifie les collisions avec les monstres
-        for projectile in self.player.all_projectiles:
-            # Vérification de la collision avec les monstres
-            if len(self.get_map().monsters[:]) > 0:
-                for monster in self.get_map().monsters[:]:
-                    dx = monster.rect.centerx - projectile.rect.centerx
-                    dy = monster.rect.centery - projectile.rect.centery
-                    distance = max(math.sqrt(dx ** 2 + dy ** 2), 1)
-                    direction = (dx / distance, dy / distance)
-                    projectile.move(direction)
-
-                    if monster.rect.colliderect(projectile.rect):
-                        # Modifie la santé du monstre ou retire le projectile si une collision est détectée
-                        monster.health -= projectile.damage
-                        self.player.all_projectiles.remove(projectile)
-                        break
-            else:
-                projectile.move()
-                
-            # Supprime le projectile si hors de l'écran
-            if (projectile.rect.x < 0 or projectile.rect.x > self.screen.get_width() or
-                projectile.rect.y < 0 or projectile.rect.y > self.screen.get_height()):
-                self.player.all_projectiles.remove(projectile)
 
         for npc in self.get_map().npcs:
             npc.move()
