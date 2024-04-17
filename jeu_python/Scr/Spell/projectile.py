@@ -6,10 +6,10 @@ current_directory = os.path.dirname(os.path.abspath(__file__))
 os.chdir(current_directory)
 
 class Fire_ball(pygame.sprite.Sprite):
-    def __init__(self, x, y, orientation="left", max_range=300):
+    def __init__(self, x, y, max_range=300, projectile_type="Fire_ball"):
         super().__init__()
+        self.projectile_type = projectile_type
         self.max_range = max_range
-        self.orientation = orientation
         self.position =[x, y]
         self.velocity = 8
         self.damage = 50
@@ -20,6 +20,7 @@ class Fire_ball(pygame.sprite.Sprite):
         self.animation_counter = 0
         self.animation_delay = 5 
         self.angle = None
+        self.launched = False
 
     def load_animation_images(self):
         images = []
@@ -44,7 +45,7 @@ class Fire_ball(pygame.sprite.Sprite):
                 self.image = rotated_image
                 self.rect = rotated_image.get_rect(center=self.rect.center)
 
-    def move3(self, x_souris, y_souris):
+    def move(self, x_souris, y_souris):
         # Calculate the vector between the object position and the mouse position
         dx = x_souris - self.position[0]
         dy = y_souris - self.position[1]
@@ -60,7 +61,6 @@ class Fire_ball(pygame.sprite.Sprite):
         # Move the object along the normalized vector
         self.position[0] += dx * self.velocity
         self.position[1] += dy * self.velocity
-
         # Check if the fireball has reached the target position
         if math.sqrt((self.position[0] - x_souris) ** 2 + (self.position[1] - y_souris) ** 2) < 10:
             self.kill()

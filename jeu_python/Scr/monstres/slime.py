@@ -69,6 +69,7 @@ class Slime(Monster):
         return image
     
     def animate(self):
+        self.save_location()  
         if pygame.time.get_ticks() - self.cooldown_timer > self.cooldown_duration:
             if self.move_direction is None:
                 # Mouvements possibles

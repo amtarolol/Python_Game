@@ -46,4 +46,7 @@ class Monster(pygame.sprite.Sprite):
             self.feet.midbottom = self.rect.midbottom
 
     def collisions_monster(self, walls, player):
-        pass
+        collision_rect = player.rect.copy()  # Copier le rectangle de collision du monstre
+
+        if self.rect.colliderect(collision_rect):
+            self.move_back()

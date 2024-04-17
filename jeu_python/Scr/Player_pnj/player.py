@@ -2,6 +2,7 @@ import pygame
 
 from Player_pnj.animation import AnimateSprite
 from Spell.projectile import Fire_ball
+from Spell.explosion import Explosion
 import os
 
 # répertoire du script actuel
@@ -63,18 +64,24 @@ class Player(Entity):
         self.all_projectiles = pygame.sprite.Group()
         self.cd = 0.0
 
-    def shoot(self, orientation, map_manager):
+    def fire_ball(self, map_manager):
         # Récupérer les coordonnées et le rectangle de collision du joueur sur l'écran
         player_screen_x, player_screen_y, player_screen_rect = map_manager.entity_position_and_rect(map_manager.player)
         # Utiliser les coordonnées du joueur sur l'écran pour le tir
-        projectile = Fire_ball(player_screen_x, player_screen_y, orientation)
+        fire_ball = Fire_ball(player_screen_x, player_screen_y)
         # Ajouter le projectile au groupe des projectiles du joueur
-        self.all_projectiles.add(projectile)
+        self.all_projectiles.add(fire_ball)
 
+    def explosion(self, map_manager):
+        # Récupérer les coordonnées et le rectangle de collision du joueur sur l'écran
+        player_screen_x, player_screen_y, player_screen_rect = map_manager.entity_position_and_rect(map_manager.player)
+        # Utiliser les coordonnées du joueur sur l'écran pour le tir
+        explosion = Explosion(player_screen_x, player_screen_y)
+        # Ajouter le projectile au groupe des projectiles du joueur
+        self.all_projectiles.add(explosion)
 
     def check_collision(self, monster):
         collision_rect = monster.rect.copy()  # Copier le rectangle de collision du monstre
-
         if self.rect.colliderect(collision_rect):
             self.speed = 0  # Arrête le joueur en cas de collision avec le monstre
             self.move_back()

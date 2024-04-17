@@ -87,10 +87,9 @@ class MapManager:
                 if sprite.feet.colliderect(self.player.rect):
                     sprite.speed = 0
                 else:
-                    sprite.speed = 0.5
-            if type(sprite) is not (Mommy):            
-                if sprite.feet.collidelist(self.get_walls()) > -1:
-                    sprite.move_back()
+                    sprite.speed = 0.5        
+            if sprite.feet.collidelist(self.get_walls()) > -1:
+                sprite.move_back()
             
     def register_map(self, name, portals=[], npcs=[], monsters=[]):
         # charger la carte (tmx)
