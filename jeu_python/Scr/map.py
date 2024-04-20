@@ -225,7 +225,16 @@ class MapManager:
         self.check_collisions()
         # Liste temporaire pour stocker les monstres morts
         dead_monsters = []
-        
+
+        player_x, player_y = self.entity_position_and_rect(self.player)[:2]
+        for projectile in self.player.all_projectiles:      # Supprime le projectile si hors range
+            if (projectile.rect.center[0] < (player_x-projectile.max_range)
+                or projectile.rect.center[0] > (player_x+projectile.max_range)
+                or projectile.rect.center[1] < (player_y-projectile.max_range)
+                or projectile.rect.center[1] > (player_y+projectile.max_range)
+                ):
+                self.player.all_projectiles.remove(projectile)
+                
         for monster in self.get_map().monsters:
             if monster.health <= 0:
                 # Ajoutez d'abord les monstres morts à la liste

@@ -1,8 +1,7 @@
 import pygame
 
 from Player_pnj.animation import AnimateSprite
-from Spell.projectile import Fire_ball
-from Spell.explosion import Explosion
+from Spell.spell import Spell
 import os
 
 # répertoire du script actuel
@@ -63,22 +62,17 @@ class Player(Entity):
         self.current_frame = 0
         self.all_projectiles = pygame.sprite.Group()
         self.cd = 0.0
+        self.cdr = 1
 
-    def fire_ball(self, map_manager):
+    def use_spell(self, spell_name, map_manager):
         # Récupérer les coordonnées et le rectangle de collision du joueur sur l'écran
         player_screen_x, player_screen_y, player_screen_rect = map_manager.entity_position_and_rect(map_manager.player)
-        # Utiliser les coordonnées du joueur sur l'écran pour le tir
-        fire_ball = Fire_ball(player_screen_x, player_screen_y)
-        # Ajouter le projectile au groupe des projectiles du joueur
-        self.all_projectiles.add(fire_ball)
-
-    def explosion(self, map_manager):
-        # Récupérer les coordonnées et le rectangle de collision du joueur sur l'écran
-        player_screen_x, player_screen_y, player_screen_rect = map_manager.entity_position_and_rect(map_manager.player)
-        # Utiliser les coordonnées du joueur sur l'écran pour le tir
-        explosion = Explosion(player_screen_x, player_screen_y)
-        # Ajouter le projectile au groupe des projectiles du joueur
-        self.all_projectiles.add(explosion)
+        Spell_instance = Spell(player_screen_x, player_screen_y,)
+        # Utiliser la méthode use_spell de l'objet Spell pour invoquer le sort
+        spell = Spell_instance.use_spell(spell_name)
+        # Ajouter le sort invoqué à la liste des projectiles du joueur
+        if spell:
+            self.all_projectiles.add(spell)
 
     def check_collision(self, monster):
         collision_rect = monster.rect.copy()  # Copier le rectangle de collision du monstre

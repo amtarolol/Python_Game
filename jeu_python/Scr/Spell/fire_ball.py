@@ -12,7 +12,7 @@ class Fire_ball(pygame.sprite.Sprite):
         self.max_range = max_range
         self.position =[x, y]
         self.velocity = 8
-        self.damage = 50
+        self.damage = 20
         self.images = self.load_animation_images()
         self.image = self.images[0]  # Initialiser avec la première image
         self.rect = self.image.get_rect(topleft=self.position)
@@ -21,6 +21,8 @@ class Fire_ball(pygame.sprite.Sprite):
         self.animation_delay = 5 
         self.angle = None
         self.launched = False
+        self.cd = 0
+        self.state = "enflammé"
 
     def load_animation_images(self):
         images = []

@@ -9,10 +9,9 @@ class Explosion(pygame.sprite.Sprite):
         super().__init__()
         self.projectile_type = projectile_type
         self.max_range = max_range
-        self.position =[x, y]
+        self.position = [x, y]
         self.velocity = None
-        self.damage = 100
-        # Charger la feuille de sprite du slime
+        self.damage = 0
         self.sprite_sheet = pygame.image.load("../sort/explosion.png")
         self.max_range = max_range
         self.animation_index = 0
@@ -20,21 +19,45 @@ class Explosion(pygame.sprite.Sprite):
         self.images = {
             'use': self.get_images(0) 
         }
-        # Vitesse de l'animation
         self.animation_delay = 10
-        self.image =  self.images['use'][0]
-        # Définir le rectangle de collision
-        self.rect = self.image.get_rect(topleft=self.position)
+        self.image = self.images['use'][0]
+        self.rect = self.image.get_rect(center=self.position)
+        self.rect.height -= 10
+        self.cd = 0
+        self.finished = False  # Ajouter une variable pour suivre l'état de l'explosion
+        self.state = None
 
     def animate(self, name="use"):
-        if self.animation_index < len(self.images[name]):
-            self.image = self.images[name][self.animation_index]
-            self.image.set_colorkey([0, 0, 0])
-            self.clock += self.animation_delay
-            if self.clock >= 100:
-                self.animation_index += 1
-                self.clock = 0
+        if self.finished:
+            self.kill()
+        else:
+            if self.animation_index < len(self.images[name]):
+                self.image = self.images[name][self.animation_index]
+                self.image.set_colorkey([0, 0, 0])
+                self.clock += self.animation_delay
+                if self.clock >= 100:
+                    self.animation_index += 1
+                    self.clock = 0
+                    if self.animation_index >= len(self.images[name]):
+                        self.finished = True  # L'animation est terminée
 
+
+    def animate(self, name="use"):
+            if self.finished:
+                self.kill()
+            else:
+                if self.animation_index < len(self.images[name]):
+                    self.image = self.images[name][self.animation_index]
+                    self.image.set_colorkey([0, 0, 0])
+                    self.clock += self.animation_delay
+                    if self.clock >= 100:
+                        self.animation_index += 1
+                        self.clock = 0
+                        if self.animation_index >= len(self.images[name]):
+                            self.finished = True  
+                            self.damage = 20
+                            self.finished = True
+            
 
     def get_images(self, y):
         images = []
@@ -49,10 +72,9 @@ class Explosion(pygame.sprite.Sprite):
         image = pygame.Surface([108, 108])
         # Charger l'image du slime depuis la feuille de sprite
         image.blit(self.sprite_sheet, (0, 0), (x, y, 108, 108))
-        image = pygame.transform.scale(image, (256, 256))
+        image = pygame.transform.scale(image, (150, 150))
         return image
-    
+
     def move(self, x, y):
         self.position[0] = x-(self.image.get_width()/2)
         self.position[1] = y-(self.image.get_width()/2)
-

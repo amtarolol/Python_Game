@@ -9,6 +9,7 @@ os.chdir(current_directory)
 class Slime(Monster):
     def __init__(self, num_monster, type_monster="slime"):
         super().__init__(type_monster, num_monster)
+        self.health = 200
         self.type_monster = type_monster
         self.num_monster = num_monster
         self.animation_index = 0
