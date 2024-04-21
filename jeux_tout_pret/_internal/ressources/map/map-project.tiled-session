@@ -1,0 +1,486 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "future_map_1.tmx",
+    "expandedProjectPaths": [
+        ".idea/inspectionProfiles",
+        ".",
+        "tuiles map"
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        ":/automap-tiles.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/bauch/Documents/cours/j_py - Copie (2)/tuiles map/donjon/dungeon.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/bauch/Documents/cours/j_py - Copie (2)/tuiles map/gate/gate.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/bauch/Documents/cours/j_py - Copie (2)/tuiles map/house/house(t_25).tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/bauch/Documents/cours/j_py - Copie (2)/tuiles map/house/house2.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/bauch/Documents/cours/j_py/tuiles map/donjon/dungeon.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/bauch/Documents/cours/j_py/tuiles map/gate/gate.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/bauch/Documents/cours/j_py/tuiles map/house/house(t_25).tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/bauch/Documents/cours/j_py/tuiles map/house/house2.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/bauch/Documents/cours/jeu_python/tuiles map/donjon/dungeon.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/bauch/Documents/cours/jeu_python/tuiles map/gate/gate.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/bauch/Documents/cours/jeu_python/tuiles map/house/house(t_25).tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/bauch/Documents/cours/jeu_python/tuiles map/house/house2.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/bauch/Documents/cours/projets_git/Python_Game/jeu_python/tuiles map/donjon/dungeon.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/bauch/Documents/cours/projets_git/Python_Game/jeu_python/tuiles map/gate/gate.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/bauch/Documents/cours/projets_git/Python_Game/jeu_python/tuiles map/house/house(t_25).tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/bauch/Documents/cours/projets_git/Python_Game/jeu_python/tuiles map/house/house2.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/bauch/cours/création jeu python/tuiles map/donjon/dungeon.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/bauch/cours/création jeu python/tuiles map/gate/gate.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/bauch/cours/création jeu python/tuiles map/gate/gate2.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/bauch/cours/création jeu python/tuiles map/gate/gate3.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/bauch/cours/création jeu python/tuiles map/gate/gate4.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/bauch/cours/création jeu python/tuiles map/gate/gate45.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/bauch/cours/création jeu python/tuiles map/gate/gate4546.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/bauch/cours/création jeu python/tuiles map/gate/gate55.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/bauch/cours/création jeu python/tuiles map/gate/gate555.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/bauch/cours/création jeu python/tuiles map/gate/gate_final.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/bauch/cours/création jeu python/tuiles map/gate/gesgesfhtrs.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/bauch/cours/création jeu python/tuiles map/house/hous_test.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/bauch/cours/création jeu python/tuiles map/house/house(t_25).tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/bauch/cours/création jeu python/tuiles map/house/house.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/bauch/cours/création jeu python/tuiles map/house/house2.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "arbre.tsx": {
+            "scaleInDock": 0.25
+        },
+        "carte_Dofus_2D.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "ciel 4 k.tsx": {
+            "scaleInDock": 0.0625,
+            "scaleInEditor": 1
+        },
+        "ciel1(4k).tsx": {
+            "scaleInDock": 0.25,
+            "scaleInEditor": 1
+        },
+        "ciel_1 - Copie.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "ciel_1.tsx": {
+            "scaleInDock": 0.25
+        },
+        "eghhtd.tsx": {
+            "scaleInDock": 0.25,
+            "scaleInEditor": 1
+        },
+        "erge.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "future_map_1.tmx": {
+            "expandedObjectLayers": [
+                9,
+                10
+            ],
+            "scale": 0.5,
+            "selectedLayer": 7,
+            "viewCenter": {
+                "x": 681,
+                "y": 880
+            }
+        },
+        "gate.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "gate2.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "gate3.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "gate5.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "gegheh.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "house.tmx": {
+            "expandedObjectLayers": [
+                6
+            ],
+            "scale": 1,
+            "selectedLayer": 5,
+            "viewCenter": {
+                "x": 199.5,
+                "y": 199.5
+            }
+        },
+        "map1_4k.tmx": {
+            "expandedObjectLayers": [
+                5
+            ],
+            "scale": 0.5,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 1048,
+                "y": 403
+            }
+        },
+        "map_1 - Copie.tmx": {
+            "scale": 0.33,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1318.181818181818,
+                "y": 613.6363636363637
+            }
+        },
+        "map_1 - Copie.tmx#ciel_1": {
+            "scaleInDock": 1
+        },
+        "map_1 - Copie.tmx#ciel_2": {
+            "scaleInDock": 1
+        },
+        "map_1 - Copie.tmx#ciel_all": {
+            "scaleInDock": 1
+        },
+        "map_1(2).tmx": {
+            "expandedObjectLayers": [
+                14,
+                19
+            ],
+            "scale": 0.33,
+            "selectedLayer": 8,
+            "viewCenter": {
+                "x": 1845.4545454545455,
+                "y": 716.6666666666666
+            }
+        },
+        "map_1(2).tmx#ciel_1": {
+            "scaleInDock": 1
+        },
+        "map_1(2).tmx#ciel_2": {
+            "scaleInDock": 1
+        },
+        "map_1(2).tmx#ciel_all": {
+            "scaleInDock": 1
+        },
+        "map_1.tmx": {
+            "expandedObjectLayers": [
+                14,
+                19
+            ],
+            "scale": 0.75,
+            "selectedLayer": 8,
+            "viewCenter": {
+                "x": 239.33333333333337,
+                "y": 238.66666666666663
+            }
+        },
+        "map_1.tmx#ciel_1": {
+            "scaleInDock": 1
+        },
+        "map_1.tmx#ciel_2": {
+            "scaleInDock": 1
+        },
+        "map_1.tmx#ciel_all": {
+            "scaleInDock": 1
+        },
+        "map_2.tmx": {
+            "expandedObjectLayers": [
+                14
+            ],
+            "scale": 1,
+            "selectedLayer": 8,
+            "viewCenter": {
+                "x": 116.5,
+                "y": 240.5
+            }
+        },
+        "map_2.tmx#ciel_1": {
+            "scaleInDock": 1
+        },
+        "map_2.tmx#ciel_2": {
+            "scaleInDock": 1
+        },
+        "map_2.tmx#ciel_all": {
+            "scaleInDock": 1
+        },
+        "nature 4516.tsx": {
+            "scaleInDock": 0.33,
+            "scaleInEditor": 0.33
+        },
+        "nature 4k.tsx": {
+            "scaleInDock": 0.33,
+            "scaleInEditor": 0.5
+        },
+        "nature(4k).tsx": {
+            "scaleInDock": 0.75,
+            "scaleInEditor": 1
+        },
+        "nauteruz.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "petit_arbre.tsx": {
+            "scaleInDock": 0.33,
+            "scaleInEditor": 1
+        },
+        "petit_arbre_test.tsx": {
+            "scaleInDock": 0.33,
+            "scaleInEditor": 1
+        },
+        "petite_map_1.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 767,
+                "y": 430
+            }
+        },
+        "test.tmx": {
+            "expandedObjectLayers": [
+                2,
+                3
+            ],
+            "scale": 0.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 639,
+                "y": 318
+            }
+        },
+        "test2.tmx": {
+            "expandedObjectLayers": [
+                2,
+                3
+            ],
+            "scale": 0.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 767,
+                "y": 432
+            }
+        },
+        "test_minimap.tmx": {
+            "expandedObjectLayers": [
+                3,
+                2
+            ],
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 765,
+                "y": 692
+            }
+        },
+        "tuiles map/gate.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "tuiles map/gate3.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "tuiles map/gate4.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 0.75,
+            "scaleInEditor": 1
+        },
+        "tuiles map/gate5.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "tuiles map/house/house(t_25).tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "tuiles map/house/house.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "untitled.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 974,
+                "y": 313
+            }
+        },
+        "world_map.tmx": {
+            "expandedObjectLayers": [
+                14
+            ],
+            "scale": 1,
+            "selectedLayer": 7,
+            "viewCenter": {
+                "x": 63,
+                "y": 257.5
+            }
+        },
+        "world_map.tmx#carte_Dofus_2D": {
+            "scaleInDock": 1
+        },
+        "world_map.tmx#ciel_1": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "world_map.tmx#ciel_2": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "world_map.tmx#ciel_all": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "world_map_2.tmx": {
+            "expandedObjectLayers": [
+                14
+            ],
+            "scale": 1,
+            "selectedLayer": 8,
+            "viewCenter": {
+                "x": 219,
+                "y": 444.5
+            }
+        },
+        "world_map_2.tmx#ciel_1": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "world_map_2.tmx#ciel_2": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "world_map_2.tmx#ciel_all": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "frame.defaultDuration": 1000,
+    "last.externalTilesetPath": "C:/Users/bauch/Documents/cours/projets_git/Python_Game/jeu_python/map",
+    "last.imagePath": "C:/Users/bauch/Documents/cours/projets_git/Python_Game/jeu_python/tuiles map/nature",
+    "last.objectTypesPath": "C:/Users/bauch/cours/création jeu python/.idea/type.json",
+    "map.height": 34,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 32,
+    "map.tileWidth": 32,
+    "map.width": 60,
+    "openFiles": [
+        "future_map_1.tmx",
+        "map_2.tmx",
+        "test_minimap.tmx"
+    ],
+    "project": "map-project.tiled-project",
+    "property.type": "string",
+    "recentFiles": [
+        "test_minimap.tmx",
+        "map_2.tmx",
+        "future_map_1.tmx",
+        "map_1.tmx",
+        "petit_arbre_test.tsx",
+        "C:/Users/bauch/Documents/cours/projets_git/Python_Game/jeu_python/tuiles map/donjon/dungeon.tsx",
+        "petite_map_1.tmx",
+        "house.tmx",
+        "petit_arbre.tsx",
+        "ciel_1 - Copie.tsx",
+        "test.tmx",
+        "test2.tmx"
+    ],
+    "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.margin": 10,
+    "tileset.spacing": 10,
+    "tileset.tileSize": {
+        "height": 32,
+        "width": 32
+    },
+    "tileset.transparentColor": "#000000",
+    "tileset.useTransparentColor": true
+}
