@@ -45,14 +45,15 @@ class Monster(pygame.sprite.Sprite):
                         state_details["duration"] = duration  # Mettre à jour la durée dans le dictionnaire
 
     def handle_state(self, state_name):
-        # Vérifiez si le monstre a déjà cet état
-        if state_name in self.states:
-            return
-        # Ajoutez l'état au monstre avec sa durée initiale
-        state_details = self.states_properties.states[state_name].copy()
-        state_details["start_time"] = pygame.time.get_ticks()  # Définir le temps de début
-        self.states_properties_copy.states[state_name] = state_details 
-        self.states.append(state_name)
+        if state_name is not None:
+            # Vérifiez si le monstre a déjà cet état
+            if state_name in self.states:
+                return
+            # Ajoutez l'état au monstre avec sa durée initiale
+            state_details = self.states_properties.states[state_name].copy()
+            state_details["start_time"] = pygame.time.get_ticks()  # Définir le temps de début
+            self.states_properties_copy.states[state_name] = state_details 
+            self.states.append(state_name)
 
     def update_state_times(self):
         current_time = pygame.time.get_ticks()

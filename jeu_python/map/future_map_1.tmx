@@ -271,7 +271,7 @@
  </layer>
  <objectgroup id="9" name="objects" class="colision">
   <object id="1" name="map_suivante" x="1894.33" y="768.667" width="24" height="254.667"/>
-  <object id="2" name="spawn_map_1" x="1798" y="896">
+  <object id="2" name="map1" x="1798" y="896">
    <point/>
   </object>
   <object id="3" type="collision" x="1.9125" y="1025.66" width="1918.18" height="64.6729"/>
@@ -280,7 +280,7 @@
   <object id="6" name="player" x="160" y="900">
    <point/>
   </object>
-  <object id="9" name="monster" x="681.333" y="884">
+  <object id="9" name="mommy_1" x="681.333" y="884">
    <point/>
   </object>
   <object id="10" type="collision" x="8" y="158" width="1908" height="32"/>

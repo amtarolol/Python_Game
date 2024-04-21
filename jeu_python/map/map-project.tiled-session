@@ -3,11 +3,11 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "future_map_1.tmx",
     "expandedProjectPaths": [
         ".idea/inspectionProfiles",
-        "tuiles map",
-        "."
+        ".",
+        "tuiles map"
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -160,14 +160,14 @@
         },
         "future_map_1.tmx": {
             "expandedObjectLayers": [
-                10,
-                9
+                9,
+                10
             ],
             "scale": 0.5,
-            "selectedLayer": 0,
+            "selectedLayer": 7,
             "viewCenter": {
-                "x": 957,
-                "y": 536
+                "x": 681,
+                "y": 880
             }
         },
         "gate.tsx": {
@@ -197,8 +197,8 @@
             "scale": 1,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 198.5,
-                "y": 199
+                "x": 199.5,
+                "y": 199.5
             }
         },
         "map1_4k.tmx": {
@@ -258,8 +258,8 @@
             "scale": 0.75,
             "selectedLayer": 8,
             "viewCenter": {
-                "x": 240.66666666666669,
-                "y": 239.99999999999994
+                "x": 239.33333333333337,
+                "y": 238.66666666666663
             }
         },
         "map_1.tmx#ciel_1": {
@@ -276,10 +276,10 @@
                 14
             ],
             "scale": 1,
-            "selectedLayer": 3,
+            "selectedLayer": 8,
             "viewCenter": {
-                "x": 328.5,
-                "y": 158
+                "x": 116.5,
+                "y": 240.5
             }
         },
         "map_2.tmx#ciel_1": {
@@ -319,8 +319,8 @@
             "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 769,
-                "y": 432
+                "x": 767,
+                "y": 430
             }
         },
         "test.tmx": {
@@ -355,8 +355,8 @@
             "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 769,
-                "y": 432
+                "x": 765,
+                "y": 692
             }
         },
         "tuiles map/gate.tsx": {
@@ -453,28 +453,22 @@
     "map.tileWidth": 32,
     "map.width": 60,
     "openFiles": [
-        "house.tmx",
-        "map_2.tmx",
-        "map_1.tmx",
         "future_map_1.tmx",
-        "petite_map_1.tmx",
-        "petit_arbre.tsx",
-        "C:/Users/bauch/Documents/cours/projets_git/Python_Game/jeu_python/tuiles map/donjon/dungeon.tsx",
-        "test_minimap.tmx",
-        "petit_arbre_test.tsx"
+        "map_2.tmx",
+        "test_minimap.tmx"
     ],
     "project": "map-project.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "house.tmx",
-        "map_2.tmx",
-        "map_1.tmx",
-        "future_map_1.tmx",
-        "petite_map_1.tmx",
-        "petit_arbre.tsx",
-        "C:/Users/bauch/Documents/cours/projets_git/Python_Game/jeu_python/tuiles map/donjon/dungeon.tsx",
         "test_minimap.tmx",
+        "map_2.tmx",
+        "future_map_1.tmx",
+        "map_1.tmx",
         "petit_arbre_test.tsx",
+        "C:/Users/bauch/Documents/cours/projets_git/Python_Game/jeu_python/tuiles map/donjon/dungeon.tsx",
+        "petite_map_1.tmx",
+        "house.tmx",
+        "petit_arbre.tsx",
         "ciel_1 - Copie.tsx",
         "test.tmx",
         "test2.tmx"

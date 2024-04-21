@@ -5,7 +5,7 @@ current_directory = os.path.dirname(os.path.abspath(__file__))
 os.chdir(current_directory)
 
 class Explosion(pygame.sprite.Sprite):
-    def __init__(self, x, y, max_range=500, projectile_type="Explosion"):
+    def __init__(self, x, y, max_range=1500, projectile_type="Explosion"):
         super().__init__()
         self.projectile_type = projectile_type
         self.max_range = max_range
@@ -55,7 +55,7 @@ class Explosion(pygame.sprite.Sprite):
                         self.clock = 0
                         if self.animation_index >= len(self.images[name]):
                             self.finished = True  
-                            self.damage = 20
+                            self.damage = 200
                             self.finished = True
             
 

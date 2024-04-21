@@ -14,7 +14,7 @@ class Slime(Monster):
         self.num_monster = num_monster
         self.animation_index = 0
         self.cooldown_timer = 0
-        self.cooldown_duration = self.cooldown_duration = random.randint(2000, 3500) 
+        self.cooldown_duration = self.cooldown_duration = random.randint(1000, 3500) 
         self.animation_delay = 25
         self.sprite_sheet = pygame.image.load("../sprites/monstres/slime_move.png")
         self.images = {
@@ -116,7 +116,7 @@ class Slime(Monster):
                 if self.move_amount >= self.move_distance:
                     self.move_direction = None
                 
-                self.cooldown_duration = self.cooldown_duration = random.randint(2000, 3500) 
+                self.cooldown_duration = self.cooldown_duration = random.randint(1500, 3000) 
         else:
             self.change_animation('first_row')
         

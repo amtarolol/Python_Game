@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="15" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="20" nextobjectid="20">
+<map version="1.8" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="15" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="20" nextobjectid="20">
  <tileset firstgid="1" source="carte_Dofus_2D.tsx"/>
- <tileset firstgid="181" name="ciel_1" tilewidth="32" tileheight="32" tilecount="84" columns="21">
-  <image source="../tuiles map/ciel/ciel_1.png" trans="000000" width="700" height="150"/>
+ <tileset firstgid="181" name="ciel_1" tilewidth="32" tileheight="32" tilecount="1395" columns="93">
+  <image source="../tuiles map/ciel/ciel_1.png" trans="000000" width="2980" height="500"/>
  </tileset>
- <tileset firstgid="265" name="ciel_all" tilewidth="32" tileheight="32" tilecount="300" columns="15">
+ <tileset firstgid="1576" name="ciel_all" tilewidth="32" tileheight="32" tilecount="300" columns="15">
   <image source="../tuiles map/ciel/ciel_all.png" trans="000000" width="500" height="650"/>
   <tile id="0">
    <animation>
@@ -412,11 +412,11 @@
    </animation>
   </tile>
  </tileset>
- <tileset firstgid="565" name="ciel_2" tilewidth="32" tileheight="32" tilecount="84" columns="21">
+ <tileset firstgid="1876" name="ciel_2" tilewidth="32" tileheight="32" tilecount="84" columns="21">
   <image source="../tuiles map/ciel/ciel_2.png" trans="000000" width="700" height="150"/>
  </tileset>
- <tileset firstgid="649" source="../tuiles map/house/house2.tsx"/>
- <tileset firstgid="829" source="../tuiles map/gate/gate.tsx"/>
+ <tileset firstgid="1960" source="../tuiles map/house/house2.tsx"/>
+ <tileset firstgid="2140" source="../tuiles map/gate/gate.tsx"/>
  <layer id="2" name="herbe" width="15" height="15">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -457,9 +457,9 @@
  </layer>
  <layer id="7" name="ciel" width="15" height="15" tintcolor="#eafffd">
   <data encoding="csv">
-460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,
-475,476,477,478,479,480,481,482,483,484,485,486,487,488,489,
-490,491,492,493,494,495,496,497,498,499,500,501,502,503,504,
+1771,1772,1773,1774,1775,1776,1777,1778,1779,1780,1781,1782,1783,1784,1785,
+1786,1787,1788,1789,1790,1791,1792,1793,1794,1795,1796,1797,1798,1799,1800,
+1801,1802,1803,1804,1805,1806,1807,1808,1809,1810,1811,1812,1813,1814,1815,
 82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -538,10 +538,10 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,650,651,0,0,0,0,
-0,0,0,0,0,0,0,0,0,665,666,0,0,0,0,
-0,0,0,0,0,0,0,0,0,680,681,0,0,0,0,
-0,0,0,0,0,0,0,0,0,695,696,0,0,0,0,
+0,0,0,0,0,0,0,0,0,1961,1962,0,0,0,0,
+0,0,0,0,0,0,0,0,0,1976,1977,0,0,0,0,
+0,0,0,0,0,0,0,0,0,1991,1992,0,0,0,0,
+0,0,0,0,0,0,0,0,0,2006,2007,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -570,7 +570,7 @@
 </data>
  </layer>
  <objectgroup id="14" name="objects" class="colision">
-  <object id="1" name="spawn_map_suivante" x="49.2523" y="383">
+  <object id="1" name="map2" x="49.2523" y="383">
    <point/>
   </object>
   <object id="3" type="collision" x="1.75033" y="288.222" width="255.841" height="30.3391"/>

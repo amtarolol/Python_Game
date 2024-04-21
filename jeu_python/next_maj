@@ -1,6 +1,9 @@
 
 ################################################################################################
+Lot 1:
 Maj terminées:  
+    -   Création première map:
+    Fait
     -   Ajout de rectangles de collision pour une interaction plus précise:
     Fait
     -   Disparition du monstre lorsque sa vie est descend à 0:
@@ -15,6 +18,7 @@ Maj terminées:
     Fait
 ################################################################################################
 ################################################################################################
+Lot 2:
 Maj à faire:  
     -   Prévisualisation spell:
     Fait
@@ -24,8 +28,8 @@ Maj à faire:
     Fait
     -   Intégration de nouveaux sorts pour enrichir l'expérience de jeu:
     En cours
-    -   Recréer monstre morts quand on revient sur la map:
-    En cours
+    -   Recréer monstre quand on revient sur la map:
+    Fait
     -   Continuer l'histoire du jeu (plus de dialogs, zone ouvertes a certaines conditions):
     En cours
     -   Ajout de notion d'expérience et level + caractéristique + spell dispo en fonction du lvl:

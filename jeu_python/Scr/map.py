@@ -11,6 +11,7 @@ current_directory = os.path.dirname(os.path.abspath(__file__))
 
 # répertoire de travail pour inclure le dossier parent
 os.chdir(current_directory)
+
 @dataclass
 class Portal:
     from_world: str
@@ -26,32 +27,47 @@ class Map:
     tmx_data: pytmx.TiledMap
     portals: list[Portal]
     npcs: list[NPC]
-    monsters: list[Mommy]
+    monsters: list[Mommy, Slime]
+
+@dataclass
+class MonsterConfig:
+    monster_type: type
+    args: list
+    kwargs: dict
 
 class MapManager:
 
     def __init__(self, screen, player):
-        # Générez les monstres et ajoutez-les à la liste des monstres
-        
         self.maps = dict()
         self.screen = screen
         self.player = player
+        self.initial_monster_config = {
+            "future_map_1": [
+                MonsterConfig(Mommy, [1, 1], {}),
+                MonsterConfig(Slime, [1, 5], {})
+            ]
+        }
+
+
+
         self.current_map = "future_map_1"
-        self.register_map(self.current_map, portals=[
-            Portal(from_world=self.current_map, origin_point="map_suivante", target_world="map_2", teleport_point="spawn_map_suivante")
-        ], npcs=[
-            NPC("paul", nb_points=2, dialog=["Jeune aventurier tu est le bienvenue.","Bienvenue à 'Dream Land'.",
-                                             "Prépare toi à affronter des monstres terribles."])
-        ,], monsters=[
-        Mommy(),
-        *[Slime(random.randint(1, 5)) for _ in range(random.randint(1, 5))]  
-        ])
-        self.register_map("map_2", portals=[
-            Portal(from_world="map_2", origin_point="go_map_1", target_world="future_map_1", teleport_point="spawn_map_1" ),
-            Portal(from_world="map_2", origin_point="enter_house", target_world="house",
-                   teleport_point="spawn_house_2")
-        ])
-        self.register_map("house", portals=[
+        self.map1 = self.register_map(self.current_map, portals=[
+                Portal(from_world=self.current_map, origin_point="map_suivante", target_world="map_2", teleport_point="map2")
+                ], npcs=[
+                NPC("paul", nb_points=2, dialog=["Jeune aventurier tu est le bienvenue.","Bienvenue à 'Dream Land'.",
+                                                "Prépare toi à affronter des monstres terribles."])
+                ,], monsters=[
+                Mommy(1),
+                *[Slime(random.randint(1, 5)) for _ in range(random.randint(1, 5))]  
+                ])
+        
+        self.map2 = self.register_map("map_2", portals=[
+                Portal(from_world="map_2", origin_point="go_map_1", target_world="future_map_1", teleport_point="map1" ),
+                Portal(from_world="map_2", origin_point="enter_house", target_world="house",
+                    teleport_point="spawn_house_2")
+                ])
+        
+        self.map3 = self.register_map("house", portals=[
             Portal(from_world="house", origin_point="exit_house_2", target_world="map_2", teleport_point="enter_house_exit" )
         ])
 
@@ -77,9 +93,12 @@ class MapManager:
                 rect = pygame.Rect(point.x, point.y, point.width, point.height)
 
                 if self.player.feet.colliderect(rect):
+                    
                     copy_portal = portal
                     self.current_map = portal.target_world
                     self.teleport_player(copy_portal.teleport_point)
+                    self.teleport_monsters2()
+                    
 
         # collisions
         for sprite in self.get_group().sprites():
@@ -114,16 +133,14 @@ class MapManager:
         for npc in npcs:
             group.add(npc)
 
+        # Ajouter les monstres à la carte
         for monster in monsters:
             group.add(monster)
-        
-        for monster in monsters:
             if monster.health <= 0:
                 group.remove(monster)
         
         for projectile in self.player.all_projectiles:
             group.add(projectile)
-        
         #créé objet map
         self.maps[name] = Map(name, walls, group, tmx_data, portals, npcs, monsters)
 
@@ -166,6 +183,29 @@ class MapManager:
             for monster in monsters:
                 spawn_point_monster = monster.load_points(map_data.tmx_data)
                 monster.teleport_spawn(spawn_point_monster)
+
+    def teleport_monsters2(self):
+        # Obtenir la carte actuelle
+        current_map_data = self.get_map()
+
+        # Effacer tous les monstres actuels de la carte spécifique
+        for monster in current_map_data.monsters:
+            current_map_data.group.remove(monster)
+        current_map_data.monsters.clear()
+
+        # Réinitialiser les monstres en fonction de la carte actuelle
+        initial_monsters_config = self.initial_monster_config.get(current_map_data.name, [])
+
+        for config in initial_monsters_config:
+            num_monsters = random.randint(config.args[0], config.args[1])
+            # Créer et ajouter chaque monstre à la carte
+            for _ in range(num_monsters):
+                new_monster = config.monster_type(random.randint(config.args[0], config.args[1]))
+                # Sélectionner un point d'apparition différent pour chaque slime
+                spawn_point_new_monster = new_monster.load_points(current_map_data.tmx_data)
+                new_monster.teleport_spawn(spawn_point_new_monster)
+                current_map_data.group.add(new_monster)
+                current_map_data.monsters.append(new_monster)
 
     def draw(self):
         self.get_group().draw(self.screen)
@@ -223,31 +263,32 @@ class MapManager:
     def update(self):
         self.get_group().update()
         self.check_collisions()
-        # Liste temporaire pour stocker les monstres morts
-        dead_monsters = []
 
         player_x, player_y = self.entity_position_and_rect(self.player)[:2]
-        for projectile in self.player.all_projectiles:      # Supprime le projectile si hors range
-            if (projectile.rect.center[0] < (player_x-projectile.max_range)
-                or projectile.rect.center[0] > (player_x+projectile.max_range)
-                or projectile.rect.center[1] < (player_y-projectile.max_range)
-                or projectile.rect.center[1] > (player_y+projectile.max_range)
+        for projectile in self.player.all_projectiles:      
+            # Supprime le projectile s'il est hors de portée
+            if (projectile.rect.center[0] < (player_x - projectile.max_range)
+                or projectile.rect.center[0] > (player_x + projectile.max_range)
+                or projectile.rect.center[1] < (player_y - projectile.max_range)
+                or projectile.rect.center[1] > (player_y + projectile.max_range)
                 ):
                 self.player.all_projectiles.remove(projectile)
                 
+        # Liste temporaire pour stocker les monstres morts
+        dead_monsters = []
         for monster in self.get_map().monsters:
             if monster.health <= 0:
-                # Ajoutez d'abord les monstres morts à la liste
+                # Ajouter les monstres morts à la liste temporaire
                 dead_monsters.append(monster)
             else:
-                # Mettez à jour et animez les monstres vivants
+                # Mettre à jour et animer les monstres vivants
                 self.draw_health_bar(monster)
                 monster.collisions_monster(self.get_walls(), self.player)
-                monster.animate()
+                monster.animate()            
 
+        # Supprimer les monstres morts du groupe de sprites
         for monster in dead_monsters:
             self.get_group().remove(monster)
-            # Supprimez également le monstre de la liste des monstres de la carte
             self.get_map().monsters.remove(monster)
 
         for npc in self.get_map().npcs:

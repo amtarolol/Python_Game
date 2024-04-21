@@ -32,8 +32,8 @@ class Game:
                          "cd": 80 * self.player.cdr},
             "iceball": {"icon": pygame.image.load("../sort/spell_bar/glace.JPG"), "max_range": 500,
                         "cd": 80 * self.player.cdr},
-            "lave": {"icon": pygame.image.load("../sort/spell_bar/lave.JPG"), "max_range": 500,
-                     "cd": 240 * self.player.cdr}
+            "lave": {"icon": pygame.image.load("../sort/spell_bar/lave.JPG"), "max_range": 1500,
+                     "cd": 0 * self.player.cdr}
         }
         spell_icons = {spell_name: properties["icon"] for spell_name, properties in self.spell_properties.items()}
         self.spell_bar = SpellBar(self.screen, spell_icons)
