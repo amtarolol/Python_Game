@@ -10,6 +10,7 @@ class Slime(Monster):
     def __init__(self, num_monster, type_monster="slime"):
         super().__init__(type_monster, num_monster)
         self.health = 200
+        self.max_health = 200
         self.type_monster = type_monster
         self.num_monster = num_monster
         self.animation_index = 0
@@ -29,6 +30,8 @@ class Slime(Monster):
         self.move_amount = 0  # Quantité de déplacement effectuée
         self.image = self.images['first_row'][0]
         self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
+        self.mask_image = self.mask.to_surface()
         self.rect.x = self.position[0]
         self.rect.y = self.position[1]
         self.rect.height -= 20
@@ -39,15 +42,14 @@ class Slime(Monster):
     def change_animation(self, name="first_row", flip=False):
         self.image = self.images[name][self.animation_index // self.animation_delay]
         self.image.set_colorkey([0, 0, 0])
-
         # Mettre à jour la position du rectangle de collision
         self.rect.x = self.position[0]
         self.rect.y = self.position[1]
-
+        self.mask = pygame.mask.from_surface(self.image)
+        self.mask_image = self.mask.to_surface()
         # Inverser l'image si nécessaire
         if flip:
             self.image = pygame.transform.flip(self.image, True, False)
-
         # Incrémenter l'index d'animation
         self.animation_index += 1
         if self.animation_index >= len(self.images[name]) * self.animation_delay:

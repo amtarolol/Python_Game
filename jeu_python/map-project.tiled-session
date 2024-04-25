@@ -1,11 +1,11 @@
 {
     "activeFile": "",
     "expandedProjectPaths": [
-        ".",
-        ".idea/inspectionProfiles",
-        "tuiles map/house",
         "map",
-        "tuiles map"
+        ".",
+        "tuiles map",
+        "tuiles map/house",
+        ".idea/inspectionProfiles"
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {

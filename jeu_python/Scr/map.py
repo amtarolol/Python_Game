@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from Player_pnj.player import NPC
 from monstres.momy import Mommy
 from monstres.slime import Slime
+from monstres.rabbit import Rabbit
 import random
 import os
 
@@ -27,7 +28,7 @@ class Map:
     tmx_data: pytmx.TiledMap
     portals: list[Portal]
     npcs: list[NPC]
-    monsters: list[Mommy, Slime]
+    monsters: list[Mommy, Slime, Rabbit]
 
 @dataclass
 class MonsterConfig:
@@ -43,8 +44,8 @@ class MapManager:
         self.player = player
         self.initial_monster_config = {
             "future_map_1": [
-                MonsterConfig(Mommy, [1, 1], {}),
-                MonsterConfig(Slime, [1, 5], {})
+                MonsterConfig(Rabbit, [3, 5, 1, 5], {}),
+                MonsterConfig(Slime, [1, 5, 1, 5], {})
             ]
         }
 
@@ -57,7 +58,7 @@ class MapManager:
                 NPC("paul", nb_points=2, dialog=["Jeune aventurier tu est le bienvenue.","Bienvenue à 'Dream Land'.",
                                                 "Prépare toi à affronter des monstres terribles."])
                 ,], monsters=[
-                Mommy(1),
+                *[Rabbit(random.randint(1, 5)) for _ in range(random.randint(3, 5))],
                 *[Slime(random.randint(1, 5)) for _ in range(random.randint(1, 5))]  
                 ])
         
@@ -200,7 +201,7 @@ class MapManager:
             num_monsters = random.randint(config.args[0], config.args[1])
             # Créer et ajouter chaque monstre à la carte
             for _ in range(num_monsters):
-                new_monster = config.monster_type(random.randint(config.args[0], config.args[1]))
+                new_monster = config.monster_type(random.randint(config.args[2], config.args[3]))
                 # Sélectionner un point d'apparition différent pour chaque slime
                 spawn_point_new_monster = new_monster.load_points(current_map_data.tmx_data)
                 new_monster.teleport_spawn(spawn_point_new_monster)
@@ -229,7 +230,7 @@ class MapManager:
         bar_x = entity_rect.x
         bar_y = entity_rect.y - bar_height - 7
         # Calcule la longueur de la barre de vie en fonction de la santé de l'entité
-        health_ratio = entity.health / entity.max_health
+        health_ratio = (entity.health / entity.max_health)
         bar_length = int(bar_width * health_ratio)
         bar_length_max = int(bar_width * (entity.max_health / entity.max_health))
         # Dessine la barre de vie

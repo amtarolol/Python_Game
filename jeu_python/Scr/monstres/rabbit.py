@@ -1,59 +1,67 @@
 import pygame
+import random
+from monstres.monster import Monster
+import os
 
-class AnimateSlime(pygame.sprite.Sprite):
-    def __init__(self, screen_width, screen_height):
-        super().__init__()
-        # Charger la feuille de sprite du slime
-        self.sprite_sheet = pygame.image.load("../sprites/monstres/lapin_move.png")
+current_directory = os.path.dirname(os.path.abspath(__file__))
+os.chdir(current_directory)
+
+class Rabbit(Monster):
+    def __init__(self, num_monster, type_monster="rabbit"):
+        super().__init__(type_monster, num_monster)
+        self.health = 50
+        self.max_health = 50
+        self.type_monster = type_monster
+        self.num_monster = num_monster
         self.animation_index = 0
-        self.clock = 0
+        self.cooldown_timer = 0
+        self.cooldown_duration = self.cooldown_duration = random.randint(800, 1500) 
+        self.animation_delay = 10
+        self.sprite_sheet = pygame.image.load("ressources/sprites/monstres/lapin_move.png")
         self.images = {
             'down': self.get_images(0),
-            'left': self.get_images(30),  # Ajouter un espacement de 10 pixels entre les rangées
+            'left': self.get_images(30),  
             'right': self.get_images(60),
-            'up': self.get_images(90)    # Ajouter un espacement de 10 pixels entre les rangées
+            'up': self.get_images(90)    
         }
-        # Vitesse de l'animation
-        self.speed = 25
-        self.move_speed = 5
-        
-        # Définir le rectangle de collision
+        self.move_speed = 1.3  # Réglage de la vitesse de mouvement
+        self.move_increment = 1.15  # Incrément de mouvement pour un déplacement progressif
+        self.move_distance = 50  # Distance de déplacement souhaitée
+        self.move_direction = None  # Direction de déplacement actuelle
+        self.move_amount = 0  # Quantité de déplacement effectuée
         self.image = self.images['down'][0]
-
-        # Définir le rectangle de collision
-        self.rect = self.image.get_rect()
-
-        # Largeur et hauteur de l'écran
-        self.screen_width = screen_width
-        self.screen_height = screen_height
-
-        # Position initiale du slime
-        self.x_pos = 15
-        self.y_pos = 300
-
-    def change_animation(self, name):
-        self.image = self.images[name][self.animation_index]
+        
         self.image.set_colorkey([0, 0, 0])
-        self.clock += self.speed
+        self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
+        self.mask_image = self.mask.to_surface()
+        self.rect.x = self.position[0]
+        self.rect.y = self.position[1]
+        self.feet = pygame.Rect(0, 0, self.rect.width * 0.5, 12)
+        self.feet.midbottom = self.rect.midbottom
 
-        if self.clock >= 100:
-            self.animation_index += 1
-            if self.animation_index >= len(self.images[name]):
-                self.animation_index = 0
-            self.clock = 0
-            # Si le slime sort de l'écran, revenir au début
-            if self.x_pos >= self.screen_width:
-                self.x_pos = 0
-
+    def change_animation(self, name, flip=False):
+        self.image = self.images[name][self.animation_index // self.animation_delay]
+        self.image.set_colorkey([0, 0, 0])
         # Mettre à jour la position du rectangle de collision
-        self.rect.x = self.x_pos
-        self.rect.y = self.y_pos  # Mettre à jour la position y du rectangle de collision
+        self.rect.x = self.position[0]
+        self.rect.y = self.position[1]
+        self.mask = pygame.mask.from_surface(self.image)
+        self.mask_image = self.mask.to_surface()
+        # Inverser l'image si nécessaire
+        if flip:
+            self.image = pygame.transform.flip(self.image, True, False)
+        # Incrémenter l'index d'animation
+        self.animation_index += 1
+        if self.animation_index >= len(self.images[name]) * self.animation_delay:
+            self.animation_index = 0
 
 
     def get_images(self, y):
         images = []
         for i in range(3):
-            x = i * (30)
+            if i < 90:
+                x = i * (30)
             image = self.get_image(x, y)
             images.append(image)
         return images
@@ -63,67 +71,47 @@ class AnimateSlime(pygame.sprite.Sprite):
         image = pygame.Surface([30, 30])
         # Charger l'image du slime depuis la feuille de sprite
         image.blit(self.sprite_sheet, (0, 0), (x, y, 30, 30))
-        image = pygame.transform.scale(image, (64, 64))
+        image = pygame.transform.scale(image, (48, 48))
         return image
 
-# Initialiser Pygame
-pygame.init()
+    def animate(self):
+        self.save_location()  
+        if pygame.time.get_ticks() - self.cooldown_timer > self.cooldown_duration:
+            if self.move_direction is None:
+                # Mouvements possibles
+                possible_movements = [
+                    ('right', 50),
+                    ('left', -50),
+                    ('up', -50),
+                    ('down', 50),
+                ]
+                # Choisir un mouvement aléatoire
+                movement, distance = random.choice(possible_movements)
+                
+                self.move_direction = movement
+                self.move_amount = 0
+                self.cooldown_timer = pygame.time.get_ticks()
+            else:
+                # Appliquer le mouvement choisi progressivement
+                if self.move_direction == 'right':
+                    self.change_animation('right')
+                    self.position[0] += self.move_increment
+                    self.update()
+                elif self.move_direction == 'left':
+                    self.change_animation('left')
+                    self.position[0] -= self.move_increment
+                elif self.move_direction == 'up':
+                    self.change_animation('up')
+                    self.position[1] -= self.move_increment
+                elif self.move_direction == 'down':
+                    self.change_animation('down')
+                    self.position[1] += self.move_increment
 
-# Définir les dimensions de la fenêtre
-WINDOW_WIDTH = 800
-WINDOW_HEIGHT = 600
-WINDOW_SIZE = (WINDOW_WIDTH, WINDOW_HEIGHT)
+                
+                self.move_amount += self.move_increment
+                if self.move_amount >= self.move_distance:
+                    self.move_direction = None
+                self.cooldown_duration = self.cooldown_duration = random.randint(800, 1500) 
 
-# Créer le slime avec les dimensions de l'écran
-slime = AnimateSlime(WINDOW_WIDTH, WINDOW_HEIGHT)
 
-# Configuration de la fenêtre
-window = pygame.display.set_mode(WINDOW_SIZE)
-pygame.display.set_caption("Animation de slime")
 
-# Couleur de fond
-WHITE = (255, 255, 255)
-
-# Boucle de jeu
-running = True
-clock = pygame.time.Clock()
-while running:
-    window.fill(WHITE)
-
-    # Gérer les événements
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-    
-    # Vérifier les touches enfoncées
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_d]:
-        slime.change_animation('right') 
-        slime.x_pos += 10  # Déplacer le slime vers la droite
-    elif keys[pygame.K_q]:
-        slime.change_animation('left')  # Inverser l'animation
-        slime.x_pos -= 10  # Déplacer le slime vers la gauche
-    elif keys[pygame.K_z]:
-        slime.change_animation('up') 
-        slime.y_pos -= 10  # Déplacer le slime vers le haut
-    elif keys[pygame.K_s]:
-        slime.change_animation('down') 
-        slime.y_pos += 10  # Déplacer le slime vers le bas
-
-    # Mettre à jour la position y du rectangle de collision
-    slime.rect.y = slime.y_pos
-
-    # Centrer l'image du slime sur l'écran
-    image_rect = slime.rect
-    image_rect.center = (slime.x_pos, slime.y_pos)
-
-    # Afficher le slime
-    window.blit(slime.image, image_rect)
-
-    # Actualiser l'écran
-    pygame.display.flip()
-
-    # Réguler la vitesse de la boucle
-    clock.tick(30)
-
-pygame.quit()

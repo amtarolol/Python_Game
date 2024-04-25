@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "future_map_1.tmx",
+    "activeFile": "test_minimap.tmx",
     "expandedProjectPaths": [
         ".idea/inspectionProfiles",
         ".",
@@ -53,6 +53,15 @@
             "scaleInDock": 1
         },
         "C:/Users/bauch/Documents/cours/jeu_python/tuiles map/house/house2.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/bauch/Documents/cours/projets_git/Python_Game/jeu_python/Scr/ressources/tuiles map/donjon/dungeon.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/bauch/Documents/cours/projets_git/Python_Game/jeu_python/Scr/ressources/tuiles map/gate/gate.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/bauch/Documents/cours/projets_git/Python_Game/jeu_python/Scr/ressources/tuiles map/house/house2.tsx": {
             "scaleInDock": 1
         },
         "C:/Users/bauch/Documents/cours/projets_git/Python_Game/jeu_python/tuiles map/donjon/dungeon.tsx": {
@@ -160,14 +169,14 @@
         },
         "future_map_1.tmx": {
             "expandedObjectLayers": [
-                9,
-                10
+                10,
+                9
             ],
             "scale": 0.5,
             "selectedLayer": 7,
             "viewCenter": {
-                "x": 681,
-                "y": 880
+                "x": 957,
+                "y": 542
             }
         },
         "gate.tsx": {
@@ -349,14 +358,14 @@
         },
         "test_minimap.tmx": {
             "expandedObjectLayers": [
-                3,
-                2
+                2,
+                3
             ],
             "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 765,
-                "y": 692
+                "x": 860,
+                "y": 433
             }
         },
         "tuiles map/gate.tsx": {
@@ -460,9 +469,9 @@
     "project": "map-project.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "test_minimap.tmx",
-        "map_2.tmx",
         "future_map_1.tmx",
+        "map_2.tmx",
+        "test_minimap.tmx",
         "map_1.tmx",
         "petit_arbre_test.tsx",
         "C:/Users/bauch/Documents/cours/projets_git/Python_Game/jeu_python/tuiles map/donjon/dungeon.tsx",

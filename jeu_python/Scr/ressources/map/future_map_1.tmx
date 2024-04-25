@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="34" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="30">
+<map version="1.8" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="34" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="35">
  <tileset firstgid="1" source="ciel_1.tsx"/>
  <tileset firstgid="1396" source="carte_Dofus_2D.tsx"/>
  <tileset firstgid="1576" source="arbre.tsx"/>
@@ -270,7 +270,7 @@
 </data>
  </layer>
  <objectgroup id="9" name="objects" class="colision">
-  <object id="1" name="map_suivante" x="1894.33" y="768.667" width="24" height="254.667"/>
+  <object id="1" name="map_suivante" x="1880.33" y="768.667" width="38" height="254.667"/>
   <object id="2" name="map1" x="1798" y="896">
    <point/>
   </object>
@@ -280,7 +280,7 @@
   <object id="6" name="player" x="160" y="900">
    <point/>
   </object>
-  <object id="9" name="mommy_1" x="681.333" y="884">
+  <object id="9" name="rabbit_4" x="1467.33" y="906">
    <point/>
   </object>
   <object id="10" type="collision" x="8" y="158" width="1908" height="32"/>
@@ -312,6 +312,19 @@
   <object id="27" type="collision" x="655" y="448" width="106" height="48"/>
   <object id="28" type="collision" x="834" y="296" width="52" height="48"/>
   <object id="29" type="collision" x="1031" y="258" width="106" height="48"/>
+  <object id="30" name="rabbit_5" x="1680" y="882">
+   <point/>
+  </object>
+  <object id="31" name="rabbit_2" x="370" y="932">
+   <point/>
+  </object>
+  <object id="32" name="rabbit_1" x="660" y="858">
+   <point/>
+  </object>
+  <object id="33" name="rabbit_3" x="1038" y="942">
+   <point/>
+  </object>
+  <object id="34" type="collision" x="1896" y="773" width="16" height="246"/>
  </objectgroup>
  <objectgroup id="10" name="NPC_Path">
   <object id="7" name="paul_path2" x="863.955" y="863.955" width="32.0895" height="32.0895"/>
