@@ -3,11 +3,11 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "test_minimap.tmx",
+    "activeFile": "future_map_1.tmx",
     "expandedProjectPaths": [
+        "tuiles map",
         ".idea/inspectionProfiles",
-        ".",
-        "tuiles map"
+        "."
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -175,8 +175,8 @@
             "scale": 0.5,
             "selectedLayer": 7,
             "viewCenter": {
-                "x": 957,
-                "y": 542
+                "x": 959,
+                "y": 543
             }
         },
         "gate.tsx": {
@@ -469,9 +469,9 @@
     "project": "map-project.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "future_map_1.tmx",
-        "map_2.tmx",
         "test_minimap.tmx",
+        "map_2.tmx",
+        "future_map_1.tmx",
         "map_1.tmx",
         "petit_arbre_test.tsx",
         "C:/Users/bauch/Documents/cours/projets_git/Python_Game/jeu_python/tuiles map/donjon/dungeon.tsx",

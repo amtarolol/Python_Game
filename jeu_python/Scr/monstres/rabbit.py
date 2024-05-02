@@ -74,8 +74,9 @@ class Rabbit(Monster):
         image = pygame.transform.scale(image, (48, 48))
         return image
 
-    def animate(self):
-        self.save_location()  
+    def animate(self, walls, player):
+        self.save_location()
+        self.collisions_monster(walls, player)
         if pygame.time.get_ticks() - self.cooldown_timer > self.cooldown_duration:
             if self.move_direction is None:
                 # Mouvements possibles
@@ -93,25 +94,28 @@ class Rabbit(Monster):
                 self.cooldown_timer = pygame.time.get_ticks()
             else:
                 # Appliquer le mouvement choisi progressivement
-                if self.move_direction == 'right':
-                    self.change_animation('right')
-                    self.position[0] += self.move_increment
-                    self.update()
-                elif self.move_direction == 'left':
-                    self.change_animation('left')
-                    self.position[0] -= self.move_increment
-                elif self.move_direction == 'up':
-                    self.change_animation('up')
-                    self.position[1] -= self.move_increment
-                elif self.move_direction == 'down':
-                    self.change_animation('down')
-                    self.position[1] += self.move_increment
+                if not self.repulsion:
+                    if self.move_direction == 'right':
+                        self.change_animation('right')
+                        self.position[0] += self.move_increment
+                        self.update()
+                    elif self.move_direction == 'left':
+                        self.change_animation('left')
+                        self.position[0] -= self.move_increment
+                    elif self.move_direction == 'up':
+                        self.change_animation('up')
+                        self.position[1] -= self.move_increment
+                    elif self.move_direction == 'down':
+                        self.change_animation('down')
+                        self.position[1] += self.move_increment
 
-                
-                self.move_amount += self.move_increment
-                if self.move_amount >= self.move_distance:
-                    self.move_direction = None
-                self.cooldown_duration = self.cooldown_duration = random.randint(800, 1500) 
-
-
+                    self.move_amount += self.move_increment
+                    if self.move_amount >= self.move_distance:
+                        self.move_direction = None
+                    self.cooldown_duration = random.randint(800, 1500)
+                else:
+                    # Appliquer la répulsion
+                    self.position[0] += self.repulsion_x
+                    self.position[1] += self.repulsion_y
+                    self.repulsion = False
 

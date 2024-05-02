@@ -16,6 +16,8 @@ class Fire_ball(pygame.sprite.Sprite):
         self.images = self.load_animation_images()
         self.image = self.images[0]  # Initialiser avec la première image
         self.rect = self.image.get_rect(topleft=self.position)
+        self.mask = pygame.mask.from_surface(self.image)
+        self.mask_image = self.mask.to_surface()
         self.current_image = 0  # Ajout de l'initialisation de current_image
         self.animation_counter = 0
         self.animation_delay = 5 
@@ -46,6 +48,8 @@ class Fire_ball(pygame.sprite.Sprite):
                 # Update the object's image and rect with the rotated image
                 self.image = rotated_image
                 self.rect = rotated_image.get_rect(center=self.rect.center)
+                self.mask = pygame.mask.from_surface(self.image)
+                self.mask_image = self.mask.to_surface()
 
     def move(self, x_souris, y_souris):
         # Calculate the vector between the object position and the mouse position

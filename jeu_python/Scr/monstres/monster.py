@@ -20,10 +20,18 @@ class Monster(pygame.sprite.Sprite):
         self.image = None
         self.rect = None
         self.feet = None
+        self.mask = None
+        self.mask_image = None
         self.old_position = self.position.copy()
         self.states = []
         self.states_properties = Etats()
         self.states_properties_copy =  Etats()
+        self.repulsion_cooldown = 0
+        self.repulsion_duration = 10
+        self.repulsion_amount = 0
+        self.repulsion = False
+        self.repulsion_x = 0
+        self.repulsion_y = 0
 
     def apply_state(self):
         current_time = pygame.time.get_ticks()
@@ -73,11 +81,9 @@ class Monster(pygame.sprite.Sprite):
         damage_per_second = event.damage_per_second
         # Appliquer des dégâts périodiques au monstre
         self.health -= damage_per_second
-
         # Vérifier si le monstre est mort
         if self.health <= 0:
             self.kill()
-
 
     def save_location(self):
         self.old_position = self.position.copy()
@@ -94,7 +100,51 @@ class Monster(pygame.sprite.Sprite):
             self.feet.midbottom = self.rect.midbottom
 
     def collisions_monster(self, walls, player):
-        collision_rect = player.rect.copy()  # Copier le rectangle de collision du monstre
+        player_mask_offset_x = self.rect.x - player.rect.x
+        player_mask_offset_y = self.rect.y - player.rect.y
+        if player.mask.overlap(self.mask, (player_mask_offset_x, player_mask_offset_y)):
+            self.repulsion = True
+            self.repulsion_amount = 0
 
-        if self.rect.colliderect(collision_rect):
-            self.move_back()
+            diff_x = self.rect.centerx - player.rect.centerx
+            diff_y = self.rect.centery - player.rect.centery
+
+            # Répulsion du monstre
+            if abs(diff_x) > abs(diff_y):
+                if diff_x > 0:
+                    self.repulsion_x = 15
+                else:
+                    self.repulsion_x = -15
+                self.repulsion_y = 0
+            else:
+                self.repulsion_y = 0
+                if diff_y > 0:
+                    self.repulsion_y = 15
+                else:
+                    self.repulsion_y = -15
+                self.repulsion_x = 0
+
+        else:
+            self.repulsion = False
+
+        if self.repulsion:
+            for wall in walls:
+                if self.rect.colliderect(wall):
+                    self.repulsion = False
+                    break
+
+            if self.repulsion:
+                distance_x = self.repulsion_x / 10
+                distance_y = self.repulsion_y / 10
+
+                current_time = pygame.time.get_ticks()
+                if current_time - self.repulsion_cooldown > self.repulsion_duration:
+                    if self.repulsion_amount < 10 and self.repulsion:
+                        self.old_position[0] += distance_x
+                        self.old_position[1] += distance_y
+                        self.repulsion_amount += 1
+                        self.repulsion_cooldown = current_time
+                        self.move_back()
+
+                    else:
+                        self.repulsion = False

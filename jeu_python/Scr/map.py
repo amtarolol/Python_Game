@@ -212,6 +212,7 @@ class MapManager:
         self.get_group().draw(self.screen)
         self.get_group().center(self.player.rect.center)
         self.draw_health_bar(self.player)
+        self.draw_mana_bar(self.player)
         for monster in self.get_map().monsters:
             if monster.health > 0:
                 self.draw_health_bar(monster)
@@ -236,6 +237,24 @@ class MapManager:
         # Dessine la barre de vie
         pygame.draw.rect(self.screen, (0, 0, 0), (bar_x, bar_y, bar_length_max, bar_height))
         pygame.draw.rect(self.screen, (0, 255, 0), (bar_x, bar_y, bar_length, bar_height))
+
+    def draw_mana_bar(self, entity):
+        if entity.mana and entity.max_mana:
+            # Calcule la position de la barre de mana
+            entity_rect = self.entity_position_and_rect(entity)[-1]
+            bar_width = entity_rect.width
+            bar_height = 5
+            bar_x = entity_rect.x
+            bar_y = entity_rect.y - bar_height - 3
+            # Calcule la longueur de la barre de vie en fonction de la santé de l'entité
+            health_ratio = (entity.mana / entity.max_mana)
+            bar_length = int(bar_width * health_ratio)
+            bar_length_max = int(bar_width * (entity.max_mana / entity.max_mana))
+            # Dessine la barre de vie
+            pygame.draw.rect(self.screen, (0, 0, 0), (bar_x, bar_y, bar_length_max, bar_height))
+            pygame.draw.rect(self.screen, (0, 0, 255), (bar_x, bar_y, bar_length, bar_height))
+        else:
+            pass
 
     ########################################################################################
     ###########################    DEBUG VISUEL     ########################################
@@ -278,14 +297,12 @@ class MapManager:
         # Liste temporaire pour stocker les monstres morts
         dead_monsters = []
         for monster in self.get_map().monsters:
+            self.player.check_collision(monster, self.get_walls())
             if monster.health <= 0:
                 # Ajouter les monstres morts à la liste temporaire
                 dead_monsters.append(monster)
             else:
-                # Mettre à jour et animer les monstres vivants
-                self.draw_health_bar(monster)
-                monster.collisions_monster(self.get_walls(), self.player)
-                monster.animate()            
+                monster.animate(self.get_walls(), self.player)            
 
         # Supprimer les monstres morts du groupe de sprites
         for monster in dead_monsters:

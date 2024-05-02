@@ -11,7 +11,7 @@ class Explosion(pygame.sprite.Sprite):
         self.max_range = max_range
         self.position = [x, y]
         self.velocity = None
-        self.damage = 0
+        self.damage = 0.9
         self.sprite_sheet = pygame.image.load("ressources/sort/explosion.png")
         self.max_range = max_range
         self.animation_index = 0
@@ -22,6 +22,8 @@ class Explosion(pygame.sprite.Sprite):
         self.animation_delay = 10
         self.image = self.images['use'][0]
         self.rect = self.image.get_rect(center=self.position)
+        self.mask = pygame.mask.from_surface(self.image)
+        self.mask_image = self.mask.to_surface()
         self.rect.height -= 10
         self.cd = 0
         self.finished = False  # Ajouter une variable pour suivre l'état de l'explosion
@@ -53,9 +55,7 @@ class Explosion(pygame.sprite.Sprite):
                     if self.clock >= 100:
                         self.animation_index += 1
                         self.clock = 0
-                        if self.animation_index >= len(self.images[name]):
-                            self.finished = True  
-                            self.damage = 200
+                        if self.animation_index >= len(self.images[name]): 
                             self.finished = True
             
 

@@ -40,18 +40,20 @@ class SpellBar:
             spell_rect.center = (bar_x + part_width * (list(self.icons.keys()).index(spell) + 0.5), bar_y + bar_height // 2)
             self.screen.blit(icon_scaled, spell_rect)
 
+            # Dessiner le cooldown pour chaque sort
             cooldown_bar_width, cooldown_remaining = self.cooldown_bars[spell]
             if cooldown_remaining > 0:
                 cooldown_percentage = 1 - (cooldown_remaining / self.max_cooldown_time)
                 cooldown_bar_width = part_width * cooldown_percentage
                 cooldown_bar_width = max(0, cooldown_bar_width)
                 cooldown_bar_rect = pygame.Rect(spell_rect.left, spell_rect.top, cooldown_bar_width, bar_height)
-                cooldown_bar_surface = pygame.Surface((cooldown_bar_width-20, bar_height-20), pygame.SRCALPHA)
+                cooldown_bar_surface = pygame.Surface((cooldown_bar_width - 20, bar_height - 20), pygame.SRCALPHA)
                 cooldown_bar_surface.set_alpha(self.cooldown_bar_alpha)
                 pygame.draw.rect(cooldown_bar_surface, self.cooldown_bar_color, cooldown_bar_surface.get_rect())
                 self.screen.blit(cooldown_bar_surface, cooldown_bar_rect)
 
         self.screen.blit(bar_surface, (bar_x, bar_y))
+
 
 
     def select_spell(self, spell, cooldown):

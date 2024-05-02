@@ -24,7 +24,7 @@ class Game:
         self.map_manager = MapManager(self.screen, self.player)
         self.monsters = self.map_manager.get_map().monsters
         self.dialog_box = DialogBox()
-        self.spell_use = []
+        self.spell_use = set() 
 
         # Spell properties
         self.spell_properties = {
@@ -32,7 +32,7 @@ class Game:
                          "cd": 0, "wait_cd": 250 * self.player.cdr},
             "iceball": {"icon": pygame.image.load("ressources/sort/spell_bar/glace.JPG"), "max_range": 500,
                         "cd": 0, "wait_cd": 80 * self.player.cdr},
-            "lave": {"icon": pygame.image.load("ressources/sort/spell_bar/lave.JPG"), "max_range": 1500,
+            "lave": {"icon": pygame.image.load("ressources/sort/spell_bar/lave.JPG"), "max_range": 800,
                      "cd": 0, "wait_cd": 250 * self.player.cdr}
         }
         spell_icons = {spell_name: properties["icon"] for spell_name, properties in self.spell_properties.items()}
@@ -43,13 +43,17 @@ class Game:
         keys_pressed = pygame.key.get_pressed()
 
         if keys_pressed[pygame.K_z]:
-            self.player.move_up()
+            if self.player.repulsion == False:
+                self.player.move_up()
         elif keys_pressed[pygame.K_s]:
-            self.player.move_down()
+            if self.player.repulsion == False:
+                self.player.move_down()
         elif keys_pressed[pygame.K_q]:
-            self.player.move_left()
+            if self.player.repulsion == False:
+                self.player.move_left()
         elif keys_pressed[pygame.K_d]:
-            self.player.move_right()
+            if self.player.repulsion == False:
+                self.player.move_right()
 
     def update(self):
         self.map_manager.update()
@@ -58,6 +62,7 @@ class Game:
         clock = pygame.time.Clock()
         bullet = pygame.Surface((10, 10))
         bullet.fill((255, 0, 0))
+        col = (0, 255, 0)
 
         bullet_mask = pygame.mask.from_surface(bullet)
         # boucle du jeu
@@ -71,7 +76,7 @@ class Game:
             pos = pygame.mouse.get_pos()
             
             for monster in self.map_manager.get_map().monsters:
-                monster.apply_state()            
+                monster.apply_state()        
 
             # Boucle sur les projectiles du joueur
             for projectile in self.player.all_projectiles:
@@ -81,16 +86,21 @@ class Game:
                 for monster in self.map_manager.get_map().monsters:
                     monster.update_state_times()
                     monster_rect = self.map_manager.entity_position_and_rect(monster)[-1]
-                    if monster_rect.colliderect(projectile.rect):
+                    monster_rect_x, monster_rect_y = self.map_manager.entity_position_and_rect(monster)[:2]
+                    # Vérifier la collision avec les masques de collision
+                    if monster.mask.overlap(projectile.mask, (projectile.rect.x - monster_rect_x, projectile.rect.y - monster_rect_y)):
+                        # Ajouter la logique de collision ici
                         monster.handle_state(projectile.state)
                         monster.health -= projectile.damage
 
                         if projectile.projectile_type != "Explosion":
                             self.player.all_projectiles.remove(projectile)
 
+
             # Dessiner la carte, les collisions et la boîte de dialogue
             self.map_manager.draw()
             self.map_manager.draw_collisions()
+
             self.dialog_box.render(self.screen)
 
             # Affichage des coordonnées du joueur à l'écran
@@ -107,9 +117,10 @@ class Game:
                 if properties["cd"] != 0:
                     properties["cd"] -= 1
 
-            # Vérifier les collisions entre le joueur et les monstres
-            for monster in self.monsters:
-                self.player.check_collision(monster)
+
+            # Dessiner la surface bullet au-dessus de tout
+            bullet.fill(col)
+            self.screen.blit(bullet, pos)
 
             # Gestion des événements
             for event in pygame.event.get():
@@ -122,14 +133,20 @@ class Game:
                     if event.key == pygame.K_a:
                         if self.spell_properties["fireball"]["cd"] == 0:
                             mouse_x, mouse_y = pygame.mouse.get_pos()
-                            self.spell_use.append("fireball")
+                            self.spell_use.add("fireball")
+                            # Supprimer le plus ancien s'il est en double
+                            if len(self.spell_use) > 1:
+                                self.spell_use.remove(next(iter(self.spell_use)))
                             self.player.use_spell("fire_ball", self.map_manager)
                             # Définir le cooldown à 2 secondes (120 trames à 60 FPS)
                             self.spell_properties["fireball"]["cd"] = self.spell_properties["fireball"]["wait_cd"]
                     if event.key == pygame.K_t:
                         if self.spell_properties["lave"]["cd"] == 0:
                             mouse_x, mouse_y = pygame.mouse.get_pos()
-                            self.spell_use.append("lave")
+                            # Supprimer le plus ancien s'il est en double
+                            if len(self.spell_use) > 1:
+                                self.spell_use.remove(next(iter(self.spell_use)))
+                            self.spell_use.add("lave")
                             self.player.use_spell("explosion", self.map_manager)
                             self.spell_properties["lave"]["cd"] = self.spell_properties["lave"]["wait_cd"]
 

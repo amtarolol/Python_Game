@@ -3,6 +3,7 @@ import pygame
 from Player_pnj.animation import AnimateSprite
 from Spell.spell import Spell
 import os
+import math
 
 # répertoire du script actuel
 current_directory = os.path.dirname(os.path.abspath(__file__))
@@ -57,12 +58,20 @@ class Player(Entity):
         self.health = 100
         self.max_health = 100
         self.mana = 100
-        self.current_speed = 5
+        self.max_mana = 100
+        self.current_speed = 3
         self.speed = self.current_speed
         self.current_frame = 0
         self.all_projectiles = pygame.sprite.Group()
-        self.cd = 0.0
         self.cdr = 1
+        self.mask = pygame.mask.from_surface(self.image)
+        self.mask_image = self.mask.to_surface()
+        self.repulsion_cooldown = 0
+        self.repulsion_duration = 10
+        self.move_amount = 0
+        self.repulsion = False
+        self.repulsion_x = 0
+        self.repulsion_y = 0
 
     def use_spell(self, spell_name, map_manager):
         # Récupérer les coordonnées et le rectangle de collision du joueur sur l'écran
@@ -74,13 +83,65 @@ class Player(Entity):
         if spell:
             self.all_projectiles.add(spell)
 
-    def check_collision(self, monster):
-        collision_rect = monster.rect.copy()  # Copier le rectangle de collision du monstre
-        if self.rect.colliderect(collision_rect):
-            self.speed = 0  # Arrête le joueur en cas de collision avec le monstre
-            self.move_back()
+
+    def check_collision(self, monster, walls):
+        player_mask_offset_x = self.rect.x - monster.rect.x
+        player_mask_offset_y = self.rect.y - monster.rect.y
+
+        if monster.mask.overlap(self.mask, (player_mask_offset_x, player_mask_offset_y)):
+            self.repulsion = True
+            self.move_amount = 0
+
+            diff_x = self.rect.centerx - monster.rect.centerx
+            diff_y = self.rect.centery - monster.rect.centery
+
+            if abs(diff_x) > abs(diff_y):
+                if diff_x > 0:
+                    self.repulsion_x = 50
+                else:
+                    self.repulsion_x = -50
+                self.repulsion_y = 0
+            else:
+                self.repulsion_y = 0
+                if diff_y > 0:
+                    self.repulsion_y = 50
+                else:
+                    self.repulsion_y = -50
+                self.repulsion_x = 0
+
         else:
             self.speed = self.current_speed
+
+        if self.repulsion:
+            for wall in walls:
+                if self.rect.colliderect(wall):
+                    # Si collision avec un mur, annuler la répulsion
+                    self.repulsion = False
+                    self.speed = self.current_speed
+                    break
+
+            if self.repulsion:
+                # Diviser la répulsion en 50 étapes
+                distance_x = self.repulsion_x / 50
+                distance_y = self.repulsion_y / 50
+
+                # Appliquer la répulsion si le temps de recharge est écoulé
+                current_time = pygame.time.get_ticks()
+                if current_time - self.repulsion_cooldown > self.repulsion_duration:
+                    if self.move_amount < 50 and self.repulsion:
+                        # Effectuer chaque étape de répulsion
+                        self.old_position[0] += distance_x
+                        self.old_position[1] += distance_y
+                        self.move_amount += 1
+                        # Ajuster le temps de recharge pour chaque étape
+                        self.repulsion_cooldown = current_time
+                        # Ajuster la position du joueur
+                        self.move_back()
+
+                    else:
+                        # Fin de la répulsion
+                        self.repulsion = False
+                        self.speed = self.current_speed
 
 
 class NPC(Entity):
