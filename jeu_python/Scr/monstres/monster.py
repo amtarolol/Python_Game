@@ -15,6 +15,8 @@ class Monster(pygame.sprite.Sprite):
         self.health = 100
         self.max_health = 100
         self.mana = 100
+        self.max_mana = 100
+        self.give_xp = 20
         self.animation_index = 0
         self.animation_delay = 2
         self.image = None

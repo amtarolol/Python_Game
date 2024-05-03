@@ -59,6 +59,9 @@ class Player(Entity):
         self.max_health = 100
         self.mana = 100
         self.max_mana = 100
+        self.level = 1
+        self.xp = 0
+        self.max_xp = 100 * (1+(self.level*0.1))
         self.current_speed = 3
         self.speed = self.current_speed
         self.current_frame = 0
@@ -72,6 +75,11 @@ class Player(Entity):
         self.repulsion = False
         self.repulsion_x = 0
         self.repulsion_y = 0
+
+    def level_up(self):
+        if self.xp >= self.max_xp:
+            self.level +=1
+            self.xp = 0
 
     def use_spell(self, spell_name, map_manager):
         # Récupérer les coordonnées et le rectangle de collision du joueur sur l'écran

@@ -33,7 +33,7 @@ class Game:
             "iceball": {"icon": pygame.image.load("ressources/sort/spell_bar/glace.JPG"), "max_range": 500,
                         "cd": 0, "wait_cd": 80 * self.player.cdr},
             "lave": {"icon": pygame.image.load("ressources/sort/spell_bar/lave.JPG"), "max_range": 800,
-                     "cd": 0, "wait_cd": 250 * self.player.cdr}
+                     "cd": 0, "wait_cd": 20 * self.player.cdr}
         }
         spell_icons = {spell_name: properties["icon"] for spell_name, properties in self.spell_properties.items()}
         self.spell_bar = SpellBar(self.screen, spell_icons)
@@ -64,7 +64,6 @@ class Game:
         bullet.fill((255, 0, 0))
         col = (0, 255, 0)
 
-        bullet_mask = pygame.mask.from_surface(bullet)
         # boucle du jeu
         running = True
 
@@ -74,6 +73,7 @@ class Game:
             self.handle_input()
             self.update()
             pos = pygame.mouse.get_pos()
+            self.player.level_up()
             
             for monster in self.map_manager.get_map().monsters:
                 monster.apply_state()        

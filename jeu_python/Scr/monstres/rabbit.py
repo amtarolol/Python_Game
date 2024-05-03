@@ -11,6 +11,8 @@ class Rabbit(Monster):
         super().__init__(type_monster, num_monster)
         self.health = 50
         self.max_health = 50
+        self.mana = 0
+        self.max_mana = 0
         self.type_monster = type_monster
         self.num_monster = num_monster
         self.animation_index = 0

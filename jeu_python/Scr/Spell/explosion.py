@@ -11,7 +11,7 @@ class Explosion(pygame.sprite.Sprite):
         self.max_range = max_range
         self.position = [x, y]
         self.velocity = None
-        self.damage = 0.9
+        self.damage = 4
         self.sprite_sheet = pygame.image.load("ressources/sort/explosion.png")
         self.max_range = max_range
         self.animation_index = 0

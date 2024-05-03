@@ -213,9 +213,11 @@ class MapManager:
         self.get_group().center(self.player.rect.center)
         self.draw_health_bar(self.player)
         self.draw_mana_bar(self.player)
+        self.draw_xp_bar()
         for monster in self.get_map().monsters:
             if monster.health > 0:
                 self.draw_health_bar(monster)
+                self.draw_mana_bar(monster)
 
         for projectile in self.player.all_projectiles:
             projectile.rect.x = projectile.position[0]
@@ -247,14 +249,27 @@ class MapManager:
             bar_x = entity_rect.x
             bar_y = entity_rect.y - bar_height - 3
             # Calcule la longueur de la barre de vie en fonction de la santé de l'entité
-            health_ratio = (entity.mana / entity.max_mana)
-            bar_length = int(bar_width * health_ratio)
+            mana_ration = (entity.mana / entity.max_mana)
+            bar_length = int(bar_width * mana_ration)
             bar_length_max = int(bar_width * (entity.max_mana / entity.max_mana))
             # Dessine la barre de vie
             pygame.draw.rect(self.screen, (0, 0, 0), (bar_x, bar_y, bar_length_max, bar_height))
             pygame.draw.rect(self.screen, (0, 0, 255), (bar_x, bar_y, bar_length, bar_height))
         else:
             pass
+
+    def draw_xp_bar(self):
+        bar_width = 100
+        bar_height = 8
+        bar_x = 500
+        bar_y = 10
+        # Calcule la longueur de la barre de vie en fonction de la santé de l'entité
+        xp_ration = (self.player.xp / self.player.max_xp )
+        bar_length = int(bar_width * xp_ration)
+        bar_length_max = int(bar_width * (self.player.max_xp / self.player.max_xp))
+        # Dessine la barre de vie
+        pygame.draw.rect(self.screen, (0, 0, 0), (bar_x, bar_y, bar_length_max, bar_height))
+        pygame.draw.rect(self.screen, (255, 0, 0), (bar_x, bar_y, bar_length, bar_height))
 
     ########################################################################################
     ###########################    DEBUG VISUEL     ########################################
@@ -301,6 +316,7 @@ class MapManager:
             if monster.health <= 0:
                 # Ajouter les monstres morts à la liste temporaire
                 dead_monsters.append(monster)
+                self.player.xp += monster.give_xp
             else:
                 monster.animate(self.get_walls(), self.player)            
 
