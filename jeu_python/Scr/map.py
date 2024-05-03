@@ -259,9 +259,9 @@ class MapManager:
             pass
 
     def draw_xp_bar(self):
-        bar_width = 100
-        bar_height = 8
-        bar_x = 500
+        bar_width = 300
+        bar_height = 15
+        bar_x = (self.screen.get_width() - bar_width) // 2
         bar_y = 10
         # Calcule la longueur de la barre de vie en fonction de la santé de l'entité
         xp_ration = (self.player.xp / self.player.max_xp )
@@ -270,6 +270,17 @@ class MapManager:
         # Dessine la barre de vie
         pygame.draw.rect(self.screen, (0, 0, 0), (bar_x, bar_y, bar_length_max, bar_height))
         pygame.draw.rect(self.screen, (255, 0, 0), (bar_x, bar_y, bar_length, bar_height))
+        text = str(self.player.xp) + " / " + str(round(self.player.max_xp, 0))
+        text_font = pygame.font.Font(None, 30)
+        text_surface  = text_font.render(f"{self.player.xp} / {round(self.player.max_xp, 0)}", True, (255, 255, 255))
+        # Dimensions du texte
+        text_width, text_height = text_font.size(text)   
+        # Position du texte
+        text_x = bar_x + (bar_width - text_width) // 2
+        text_y = bar_y + (bar_height - text_height) // 2
+
+        # Dessiner le texte au centre de la barre
+        self.screen.blit(text_surface, (text_x, text_y))
 
     ########################################################################################
     ###########################    DEBUG VISUEL     ########################################

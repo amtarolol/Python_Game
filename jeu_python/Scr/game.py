@@ -108,6 +108,11 @@ class Game:
             text = text_font.render(f"Player: {self.player.position}", True, (255, 255, 255))
             self.screen.blit(text, (10, 10))  # Affiche les coordonnées en haut à gauche
 
+                        # Affichage des coordonnées du joueur à l'écran
+            text_lvl = pygame.font.Font(None, 36)
+            lvl = text_lvl.render(f"Player: {self.player.level}", True, (255, 255, 255))
+            self.screen.blit(lvl, (10, 50))  # Affiche les coordonnées en haut à gauche
+
             # Dessiner la barre de sorts
             self.spell_bar.draw_spell_bar()
             for spell in self.spell_use:
