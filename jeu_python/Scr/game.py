@@ -24,32 +24,44 @@ class Game:
         self.map_manager = MapManager(self.screen, self.player)
         self.monsters = self.map_manager.get_map().monsters
         self.dialog_box = DialogBox()
-        self.spell_use = []
+        self.spell_use = set() 
 
         # Spell properties
         self.spell_properties = {
-            "fireball": {"icon": pygame.image.load("ressources/sort/spell_bar/feu.PNG"), "max_range": 300,
-                         "cd": 0, "wait_cd": 250 * self.player.cdr},
+            "fireball": {"icon": pygame.image.load("ressources/sort/spell_bar/feu.PNG"), "max_range": 1300,
+                         "cd": 0, "wait_cd": 250 * self.player.cdr, "level_required": 1},
             "iceball": {"icon": pygame.image.load("ressources/sort/spell_bar/glace.JPG"), "max_range": 500,
-                        "cd": 0, "wait_cd": 80 * self.player.cdr},
-            "lave": {"icon": pygame.image.load("ressources/sort/spell_bar/lave.JPG"), "max_range": 1500,
-                     "cd": 0, "wait_cd": 250 * self.player.cdr}
+                        "cd": 0, "wait_cd": 80 * self.player.cdr, "level_required": 10},
+            "lave": {"icon": pygame.image.load("ressources/sort/spell_bar/lave.JPG"), "max_range": 800,
+                     "cd": 0, "wait_cd": 220 * self.player.cdr, "level_required": 2}
         }
-        spell_icons = {spell_name: properties["icon"] for spell_name, properties in self.spell_properties.items()}
-        self.spell_bar = SpellBar(self.screen, spell_icons)
+        
+        # Créer un dictionnaire pour stocker les icônes de sorts
+        self.spell_icons = {}
+
+        # Filtrer les sorts en fonction du niveau requis du joueur
+        for spell_name, properties in self.spell_properties.items():
+            if self.player.level >= properties["level_required"]:
+                self.spell_icons[spell_name] = properties["icon"]
+
+        self.spell_bar = SpellBar(self.screen, self.spell_icons)
 
     def handle_input(self):
         # Réinitialiser les touches enfoncées lors de chaque itération
         keys_pressed = pygame.key.get_pressed()
 
         if keys_pressed[pygame.K_z]:
-            self.player.move_up()
+            if self.player.repulsion == False:
+                self.player.move_up()
         elif keys_pressed[pygame.K_s]:
-            self.player.move_down()
+            if self.player.repulsion == False:
+                self.player.move_down()
         elif keys_pressed[pygame.K_q]:
-            self.player.move_left()
+            if self.player.repulsion == False:
+                self.player.move_left()
         elif keys_pressed[pygame.K_d]:
-            self.player.move_right()
+            if self.player.repulsion == False:
+                self.player.move_right()
 
     def update(self):
         self.map_manager.update()
@@ -58,20 +70,20 @@ class Game:
         clock = pygame.time.Clock()
         bullet = pygame.Surface((10, 10))
         bullet.fill((255, 0, 0))
+        col = (0, 255, 0)
 
-        bullet_mask = pygame.mask.from_surface(bullet)
         # boucle du jeu
         running = True
 
         while running:
-            
             self.player.save_location()
             self.handle_input()
             self.update()
             pos = pygame.mouse.get_pos()
+            self.player.level_up()
             
             for monster in self.map_manager.get_map().monsters:
-                monster.apply_state()            
+                monster.apply_state()        
 
             # Boucle sur les projectiles du joueur
             for projectile in self.player.all_projectiles:
@@ -81,16 +93,21 @@ class Game:
                 for monster in self.map_manager.get_map().monsters:
                     monster.update_state_times()
                     monster_rect = self.map_manager.entity_position_and_rect(monster)[-1]
-                    if monster_rect.colliderect(projectile.rect):
+                    monster_rect_x, monster_rect_y = self.map_manager.entity_position_and_rect(monster)[:2]
+                    # Vérifier la collision avec les masques de collision
+                    if monster.mask.overlap(projectile.mask, (projectile.rect.x - monster_rect_x, projectile.rect.y - monster_rect_y)):
+                        # Ajouter la logique de collision ici
                         monster.handle_state(projectile.state)
-                        monster.health -= projectile.damage
+                        monster.health -= projectile.damage * self.player.magic_power
 
                         if projectile.projectile_type != "Explosion":
                             self.player.all_projectiles.remove(projectile)
 
+
             # Dessiner la carte, les collisions et la boîte de dialogue
             self.map_manager.draw()
-            self.map_manager.draw_collisions()
+            #self.map_manager.draw_collisions()
+
             self.dialog_box.render(self.screen)
 
             # Affichage des coordonnées du joueur à l'écran
@@ -98,7 +115,17 @@ class Game:
             text = text_font.render(f"Player: {self.player.position}", True, (255, 255, 255))
             self.screen.blit(text, (10, 10))  # Affiche les coordonnées en haut à gauche
 
-            # Dessiner la barre de sorts
+                        # Affichage des coordonnées du joueur à l'écran
+            text_lvl = pygame.font.Font(None, 36)
+            lvl = text_lvl.render(f"Player: {self.player.level}", True, (255, 255, 255))
+            self.screen.blit(lvl, (10, 50))  # Affiche les coordonnées en haut à gauche
+
+            # Filtrer les sorts en fonction du niveau requis du joueur
+            for spell_name, properties in self.spell_properties.items():
+                if self.player.level >= properties["level_required"]:
+                    self.spell_icons[spell_name] = properties["icon"]
+            # Dessiner la barre de sorts et la mettre a jour
+            self.spell_bar.update()
             self.spell_bar.draw_spell_bar()
             for spell in self.spell_use:
                 self.spell_bar.select_spell(spell, self.spell_properties[spell]["cd"])
@@ -107,9 +134,10 @@ class Game:
                 if properties["cd"] != 0:
                     properties["cd"] -= 1
 
-            # Vérifier les collisions entre le joueur et les monstres
-            for monster in self.monsters:
-                self.player.check_collision(monster)
+
+            # Dessiner la surface bullet au-dessus de tout
+            bullet.fill(col)
+            self.screen.blit(bullet, pos)
 
             # Gestion des événements
             for event in pygame.event.get():
@@ -122,16 +150,23 @@ class Game:
                     if event.key == pygame.K_a:
                         if self.spell_properties["fireball"]["cd"] == 0:
                             mouse_x, mouse_y = pygame.mouse.get_pos()
-                            self.spell_use.append("fireball")
+                            self.spell_use.add("fireball")
+                            # Supprimer le plus ancien s'il est en double
+                            if len(self.spell_use) > 1:
+                                self.spell_use.remove(next(iter(self.spell_use)))
                             self.player.use_spell("fire_ball", self.map_manager)
                             # Définir le cooldown à 2 secondes (120 trames à 60 FPS)
                             self.spell_properties["fireball"]["cd"] = self.spell_properties["fireball"]["wait_cd"]
                     if event.key == pygame.K_t:
-                        if self.spell_properties["lave"]["cd"] == 0:
-                            mouse_x, mouse_y = pygame.mouse.get_pos()
-                            self.spell_use.append("lave")
-                            self.player.use_spell("explosion", self.map_manager)
-                            self.spell_properties["lave"]["cd"] = self.spell_properties["lave"]["wait_cd"]
+                        if self.player.level >= self.spell_properties["lave"]["level_required"]:
+                            if self.spell_properties["lave"]["cd"] == 0:
+                                mouse_x, mouse_y = pygame.mouse.get_pos()
+                                # Supprimer le plus ancien s'il est en double
+                                if len(self.spell_use) > 1:
+                                    self.spell_use.remove(next(iter(self.spell_use)))
+                                self.spell_use.add("lave")
+                                self.player.use_spell("explosion", self.map_manager)
+                                self.spell_properties["lave"]["cd"] = self.spell_properties["lave"]["wait_cd"]
 
             # Dessiner la portée des sorts si les touches appropriées sont enfoncées
             keys_pressed = pygame.key.get_pressed()
@@ -146,7 +181,7 @@ class Game:
 
             # Réinitialiser l'écran
             pygame.display.flip()
-            clock.tick(120)
+            clock.tick(90)
 
         pygame.quit()
 

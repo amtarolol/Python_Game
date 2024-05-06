@@ -5,15 +5,14 @@ current_directory = os.path.dirname(os.path.abspath(__file__))
 os.chdir(current_directory)
 
 class Explosion(pygame.sprite.Sprite):
-    def __init__(self, x, y, max_range=1500, projectile_type="Explosion"):
+    def __init__(self, x, y, max_range=800, projectile_type="Explosion"):
         super().__init__()
         self.projectile_type = projectile_type
         self.max_range = max_range
         self.position = [x, y]
         self.velocity = None
-        self.damage = 0
+        self.damage = 4
         self.sprite_sheet = pygame.image.load("ressources/sort/explosion.png")
-        self.max_range = max_range
         self.animation_index = 0
         self.clock = 0
         self.images = {
@@ -22,6 +21,8 @@ class Explosion(pygame.sprite.Sprite):
         self.animation_delay = 10
         self.image = self.images['use'][0]
         self.rect = self.image.get_rect(center=self.position)
+        self.mask = pygame.mask.from_surface(self.image)
+        self.mask_image = self.mask.to_surface()
         self.rect.height -= 10
         self.cd = 0
         self.finished = False  # Ajouter une variable pour suivre l'état de l'explosion
@@ -53,9 +54,7 @@ class Explosion(pygame.sprite.Sprite):
                     if self.clock >= 100:
                         self.animation_index += 1
                         self.clock = 0
-                        if self.animation_index >= len(self.images[name]):
-                            self.finished = True  
-                            self.damage = 200
+                        if self.animation_index >= len(self.images[name]): 
                             self.finished = True
             
 

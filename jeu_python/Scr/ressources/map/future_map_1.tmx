@@ -287,19 +287,19 @@
   <object id="11" type="collision" x="1330" y="264" width="584" height="58"/>
   <object id="12" type="collision" x="1326" y="262" width="60" height="442"/>
   <object id="13" type="collision" x="1910" y="184" width="6" height="84"/>
-  <object id="15" name="slime_1" x="484" y="516">
+  <object id="15" name="slime_1" x="348" y="282">
    <point/>
   </object>
-  <object id="16" name="slime_2" x="998" y="594">
+  <object id="16" name="slime_2" x="1146" y="552">
    <point/>
   </object>
-  <object id="17" name="slime_5" x="562" y="350">
+  <object id="17" name="slime_5" x="516" y="396">
    <point/>
   </object>
-  <object id="18" name="slime_4" x="952" y="372">
+  <object id="18" name="slime_4" x="974" y="350">
    <point/>
   </object>
-  <object id="19" name="slime_3" x="396" y="670">
+  <object id="19" name="slime_3" x="236" y="530">
    <point/>
   </object>
   <object id="20" type="collision" x="1120" y="371" width="70" height="48"/>

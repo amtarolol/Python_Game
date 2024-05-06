@@ -211,10 +211,13 @@ class MapManager:
     def draw(self):
         self.get_group().draw(self.screen)
         self.get_group().center(self.player.rect.center)
-        self.draw_health_bar(self.player)
+        self.draw_health_bar_player()
+        self.draw_mana_bar_player()
+        self.draw_xp_bar()
         for monster in self.get_map().monsters:
             if monster.health > 0:
-                self.draw_health_bar(monster)
+                self.draw_health_bar_monster(monster)
+                self.draw_mana_bar_monster(monster)
 
         for projectile in self.player.all_projectiles:
             projectile.rect.x = projectile.position[0]
@@ -222,20 +225,124 @@ class MapManager:
             projectile.animate() 
             self.screen.blit(projectile.image, projectile.rect)
 
-    def draw_health_bar(self, entity):
+        ###########################################################################################################################
+        ######################################      Dessin des bars d'xp, vie et mana        ######################################
+        ###########################################################################################################################
+        
+    def draw_health_bar_monster(self, monster):
         # Calcule la position de la barre de vie
-        entity_rect = self.entity_position_and_rect(entity)[-1]
-        bar_width = entity_rect.width
-        bar_height = 5
-        bar_x = entity_rect.x
-        bar_y = entity_rect.y - bar_height - 7
+        monster_rect = self.entity_position_and_rect(monster)[-1]
+        bar_width = monster_rect.width
+        bar_height = 8
+        bar_x = monster_rect.x
+        bar_y = monster_rect.y - bar_height - 7
         # Calcule la longueur de la barre de vie en fonction de la santé de l'entité
-        health_ratio = (entity.health / entity.max_health)
+        health_ratio = (monster.health / monster.max_health)
         bar_length = int(bar_width * health_ratio)
-        bar_length_max = int(bar_width * (entity.max_health / entity.max_health))
+        bar_length_max = int(bar_width * (monster.max_health / monster.max_health))
         # Dessine la barre de vie
         pygame.draw.rect(self.screen, (0, 0, 0), (bar_x, bar_y, bar_length_max, bar_height))
         pygame.draw.rect(self.screen, (0, 255, 0), (bar_x, bar_y, bar_length, bar_height))
+        text = str(monster.health) + " / " + str(round(monster.max_health, 0))
+        text_font = pygame.font.Font(None, 15)
+        text_surface  = text_font.render(f"{monster.health} / {int(round(monster.max_health, 0))}", True, (0, 0, 0))
+        # Dimensions du texte
+        text_width, text_height = text_font.size(text)   
+        # Position du texte
+        text_x = bar_x + (bar_width - text_width) // 2
+        text_y = bar_y + (bar_height - text_height) // 2
+        # Dessiner le texte au centre de la barre
+        self.screen.blit(text_surface, (text_x, text_y))
+
+    def draw_health_bar_player(self):
+        bar_width = 300
+        bar_height = 15
+        bar_x = (self.screen.get_width() - 300) // 2
+        bar_y = 10
+        # Calcule la longueur de la barre de vie en fonction de la santé de l'entité
+        health_ratio = (self.player.health / self.player.max_health)
+        bar_length = int(bar_width * health_ratio)
+        bar_length_max = int(bar_width * (self.player.max_health / self.player.max_health))
+        # Dessine la barre de vie
+        pygame.draw.rect(self.screen, (0, 0, 0), (bar_x, bar_y, bar_length_max, bar_height))
+        pygame.draw.rect(self.screen, (0, 255, 0), (bar_x, bar_y, bar_length, bar_height))
+        text = str(self.player.health) + " / " + str(round(self.player.max_health, 0))
+        text_font = pygame.font.Font(None, 30)
+        text_surface  = text_font.render(f"{self.player.health} / {int(round(self.player.max_health, 0))}", True, (255, 255, 255))
+        # Dimensions du texte
+        text_width, text_height = text_font.size(text)   
+        # Position du texte
+        text_x = bar_x + (bar_width - text_width) // 2
+        text_y = bar_y + (bar_height - text_height) // 2
+        # Dessiner le texte au centre de la barre
+        self.screen.blit(text_surface, (text_x, text_y))
+
+    def draw_mana_bar_player(self):
+        bar_width = 300
+        bar_height = 15
+        bar_x = (self.screen.get_width() - 300) // 2 - 350
+        bar_y = 10
+        # Calcule la longueur de la barre de vie en fonction de la santé de l'entité
+        mana_ratio = (self.player.mana / self.player.max_mana)
+        bar_length = int(bar_width * mana_ratio)
+        bar_length_max = int(bar_width * (self.player.max_health / self.player.max_mana))
+        # Dessine la barre de vie
+        pygame.draw.rect(self.screen, (0, 0, 0), (bar_x, bar_y, bar_length_max, bar_height))
+        pygame.draw.rect(self.screen, (0, 0, 255), (bar_x, bar_y, bar_length, bar_height))
+        text = str(self.player.mana) + " / " + str(round(self.player.max_mana, 0))
+        text_font = pygame.font.Font(None, 30)
+        text_surface  = text_font.render(f"{self.player.mana} / {int(round(self.player.max_mana, 0))}", True, (255, 255, 255))
+        # Dimensions du texte
+        text_width, text_height = text_font.size(text)   
+        # Position du texte
+        text_x = bar_x + (bar_width - text_width) // 2
+        text_y = bar_y + (bar_height - text_height) // 2
+        # Dessiner le texte au centre de la barre
+        self.screen.blit(text_surface, (text_x, text_y))
+
+    def draw_mana_bar_monster(self, monster):
+        if monster.mana and monster.max_mana:
+            # Calcule la position de la barre de mana
+            monster_rect = self.entity_position_and_rect(monster)[-1]
+            bar_width = monster_rect.width
+            bar_height = 5
+            bar_x = monster_rect.x
+            bar_y = monster_rect.y - bar_height - 3
+            # Calcule la longueur de la barre de vie en fonction de la santé de l'entité
+            mana_ratio = (monster.mana / monster.max_mana)
+            bar_length = int(bar_width * mana_ratio)
+            bar_length_max = int(bar_width * (monster.max_mana / monster.max_mana))
+            # Dessine la barre de vie
+            pygame.draw.rect(self.screen, (0, 0, 0), (bar_x, bar_y, bar_length_max, bar_height))
+            pygame.draw.rect(self.screen, (0, 0, 255), (bar_x, bar_y, bar_length, bar_height))
+        else:
+            pass
+
+    def draw_xp_bar(self):
+        bar_width = 300
+        bar_height = 15
+        bar_x = (self.screen.get_width() - 300) // 2 + 350
+        bar_y = 10
+        # Calcule la longueur de la barre de vie en fonction de la santé de l'entité
+        xp_ration = (self.player.xp / self.player.max_xp )
+        bar_length = int(bar_width * xp_ration)
+        bar_length_max = int(bar_width * (self.player.max_xp / self.player.max_xp))
+        # Dessine la barre de vie
+        pygame.draw.rect(self.screen, (0, 0, 0), (bar_x, bar_y, bar_length_max, bar_height))
+        pygame.draw.rect(self.screen, (255, 0, 0), (bar_x, bar_y, bar_length, bar_height))
+        text = str(self.player.xp) + " / " + str(round(self.player.max_xp, 0))
+        text_font = pygame.font.Font(None, 30)
+        text_surface  = text_font.render(f"{self.player.xp} / {int(round(self.player.max_xp, 0))}", True, (255, 255, 255))
+        # Dimensions du texte
+        text_width, text_height = text_font.size(text)   
+        # Position du texte
+        text_x = bar_x + (bar_width - text_width) // 2
+        text_y = bar_y + (bar_height - text_height) // 2
+
+        # Dessiner le texte au centre de la barre
+        self.screen.blit(text_surface, (text_x, text_y))
+
+        
 
     ########################################################################################
     ###########################    DEBUG VISUEL     ########################################
@@ -278,14 +385,13 @@ class MapManager:
         # Liste temporaire pour stocker les monstres morts
         dead_monsters = []
         for monster in self.get_map().monsters:
+            self.player.check_collision(monster, self.get_walls())
             if monster.health <= 0:
                 # Ajouter les monstres morts à la liste temporaire
                 dead_monsters.append(monster)
+                self.player.xp += monster.give_xp
             else:
-                # Mettre à jour et animer les monstres vivants
-                self.draw_health_bar(monster)
-                monster.collisions_monster(self.get_walls(), self.player)
-                monster.animate()            
+                monster.animate(self.get_walls(), self.player)            
 
         # Supprimer les monstres morts du groupe de sprites
         for monster in dead_monsters:

@@ -11,6 +11,9 @@ class Slime(Monster):
         super().__init__(type_monster, num_monster)
         self.health = 200
         self.max_health = 200
+        self.degat_collision = self.max_health * 0.05
+        self.mana = 0
+        self.max_mana = 0
         self.type_monster = type_monster
         self.num_monster = num_monster
         self.animation_index = 0
@@ -71,8 +74,9 @@ class Slime(Monster):
         image = pygame.transform.scale(image, (64, 64))
         return image
     
-    def animate(self):
+    def animate(self, walls, player):
         self.save_location()  
+        self.collisions_monster(walls, player)
         if pygame.time.get_ticks() - self.cooldown_timer > self.cooldown_duration:
             if self.move_direction is None:
                 # Mouvements possibles
@@ -120,5 +124,9 @@ class Slime(Monster):
                 
                 self.cooldown_duration = self.cooldown_duration = random.randint(1500, 3000) 
         else:
+            
+            self.position[0] += self.repulsion_x
+            self.position[1] += self.repulsion_y
+            self.repulsion = False
             self.change_animation('first_row')
         
