@@ -6,7 +6,7 @@ current_directory = os.path.dirname(os.path.abspath(__file__))
 os.chdir(current_directory)
 
 class Fire_ball(pygame.sprite.Sprite):
-    def __init__(self, x, y, max_range=300, projectile_type="Fire_ball"):
+    def __init__(self, x, y, max_range=1300, projectile_type="Fire_ball"):
         super().__init__()
         self.projectile_type = projectile_type
         self.max_range = max_range

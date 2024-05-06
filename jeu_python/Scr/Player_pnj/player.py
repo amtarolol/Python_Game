@@ -57,6 +57,8 @@ class Player(Entity):
         self.attack = 10
         self.health = 100
         self.max_health = 100
+        self.power = 1
+        self.magic_power = 1
         self.mana = 100
         self.max_mana = 100
         self.level = 1
@@ -75,12 +77,14 @@ class Player(Entity):
         self.repulsion = False
         self.repulsion_x = 0
         self.repulsion_y = 0
+        self.carac_points = 0
 
     def level_up(self):
         if self.xp >= self.max_xp:
             self.xp = 0
             self.level += 1
-            self.max_xp = 100 * (1 + (self.level*0.1))            
+            self.max_xp = self.max_xp * 1.2      
+            self.carac_points += 5      
 
     def use_spell(self, spell_name, map_manager):
         # Récupérer les coordonnées et le rectangle de collision du joueur sur l'écran
@@ -100,6 +104,7 @@ class Player(Entity):
         if monster.mask.overlap(self.mask, (player_mask_offset_x, player_mask_offset_y)):
             self.repulsion = True
             self.move_amount = 0
+            self.health -= monster.degat_collision
 
             diff_x = self.rect.centerx - monster.rect.centerx
             diff_y = self.rect.centery - monster.rect.centery

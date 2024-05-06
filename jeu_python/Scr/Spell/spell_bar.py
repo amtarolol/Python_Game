@@ -5,8 +5,8 @@ class SpellBar:
         self.screen = screen
         self.icons = icons
         self.max_cooldown_time = max_cooldown_time
-        self.cooldowns = {spell: 0 for spell in icons.keys()}
-        self.cooldown_bars = {spell: (0, 0) for spell in icons.keys()}  # Stocker la largeur et le cooldown restant
+        self.cooldowns = {spell: 0 for spell in self.icons.keys()}
+        self.cooldown_bars = {spell: (0, 0) for spell in self.icons.keys()}  # Stocker la largeur et le cooldown restant
         self.icon_size = 50
         self.icon_scale = 0.5
         self.selected_spell = None
@@ -14,14 +14,20 @@ class SpellBar:
         self.cooldown_bar_alpha = 70  # Opacité de la barre de remplissage
 
     def update(self):
+        self.icons = self.icons
+        self.cooldown_bars = {spell: (0, 0) for spell in self.icons.keys()}
         for spell in self.cooldowns:
             if self.cooldowns[spell] > 0:
                 self.cooldowns[spell] -= 1
-                self.cooldown_bars[spell] = (max(0, self.cooldown_bars[spell][0] - self.max_cooldown_time / 120),
-                                            self.cooldowns[spell])
+                self.cooldown_bars[spell] = (
+                    max(0, self.cooldown_bars[spell][0] - self.max_cooldown_time / 120),
+                    self.cooldowns[spell]
+                )
+
 
     def draw_spell_bar(self):
-        bar_width = 210
+        nb_icons = len(self.icons)
+        bar_width = nb_icons * 70
         bar_height = 70
         bar_x = (self.screen.get_width() - bar_width) // 2
         bar_y = self.screen.get_height() - 2 - bar_height
@@ -30,8 +36,8 @@ class SpellBar:
         bar_surface.fill((255, 255, 255, 0))  # Fond transparent
         pygame.draw.rect(bar_surface, (0, 0, 0), bar_surface.get_rect(), 5)
 
-        part_width = bar_width // 3
-        for i in range(1, 3):
+        part_width = bar_width // nb_icons
+        for i in range(1, nb_icons):
             pygame.draw.rect(self.screen, (0, 0, 0, 128), (bar_x + part_width * i, bar_y, 5, bar_height))
 
         for spell, icon in self.icons.items():

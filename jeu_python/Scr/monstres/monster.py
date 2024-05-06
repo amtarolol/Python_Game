@@ -34,6 +34,7 @@ class Monster(pygame.sprite.Sprite):
         self.repulsion = False
         self.repulsion_x = 0
         self.repulsion_y = 0
+        
 
     def apply_state(self):
         current_time = pygame.time.get_ticks()
