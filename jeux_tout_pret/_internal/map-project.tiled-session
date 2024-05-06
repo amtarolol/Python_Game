@@ -1,0 +1,159 @@
+{
+    "activeFile": "",
+    "expandedProjectPaths": [
+        ".",
+        ".idea/inspectionProfiles",
+        "tuiles map/house",
+        "map",
+        "tuiles map"
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "": {
+            "scaleInEditor": 1
+        },
+        "carte_Dofus_2D.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "gate.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "house.tmx": {
+            "expandedObjectLayers": [
+                6
+            ],
+            "scale": 1,
+            "selectedLayer": 5,
+            "viewCenter": {
+                "x": 295,
+                "y": 252.5
+            }
+        },
+        "map/carte_Dofus_2D.tsx": {
+            "scaleInDock": 1
+        },
+        "map/house.tmx": {
+            "scale": 2.05675,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 199.10052266925973,
+                "y": 199.3436246505409
+            }
+        },
+        "map/map_1.tmx": {
+            "scale": 1.7139583333333333,
+            "selectedLayer": 7,
+            "viewCenter": {
+                "x": 239.50407195818647,
+                "y": 299.8906041084235
+            }
+        },
+        "map/map_1.tmx#ciel_1": {
+            "scaleInDock": 1
+        },
+        "map/map_1.tmx#ciel_2": {
+            "scaleInDock": 1
+        },
+        "map/map_1.tmx#ciel_all": {
+            "scaleInDock": 1
+        },
+        "tuiles map/donjon/dungeon.tsx": {
+            "scaleInDock": 1
+        },
+        "tuiles map/gate.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "tuiles map/gate3.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "tuiles map/gate4.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 0.75,
+            "scaleInEditor": 1
+        },
+        "tuiles map/gate5.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "tuiles map/house/house(t_25).tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "tuiles map/house/house.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "world_map.tmx": {
+            "expandedObjectLayers": [
+                14
+            ],
+            "scale": 1,
+            "selectedLayer": 7,
+            "viewCenter": {
+                "x": 67,
+                "y": 111.5
+            }
+        },
+        "world_map.tmx#carte_Dofus_2D": {
+            "scaleInDock": 1
+        },
+        "world_map.tmx#ciel_1": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "world_map.tmx#ciel_2": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "world_map.tmx#ciel_all": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "world_map_2.tmx": {
+            "expandedObjectLayers": [
+                14
+            ],
+            "scale": 1,
+            "selectedLayer": 8,
+            "viewCenter": {
+                "x": 224,
+                "y": 303.5
+            }
+        },
+        "world_map_2.tmx#ciel_1": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "world_map_2.tmx#ciel_2": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "world_map_2.tmx#ciel_all": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "openFiles": [
+    ],
+    "project": "",
+    "recentFiles": [
+        "map/map_1.tmx",
+        "map/house.tmx",
+        "house.tmx",
+        "world_map.tmx",
+        "world_map_2.tmx",
+        "tuiles map/house/house(t_25).tsx",
+        "carte_Dofus_2D.tsx",
+        "tuiles map/house/house.tsx",
+        "gate.tsx",
+        "tuiles map/gate.tsx",
+        "tuiles map/gate3.tsx",
+        "tuiles map/gate4.tsx"
+    ]
+}

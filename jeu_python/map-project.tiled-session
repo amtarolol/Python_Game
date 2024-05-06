@@ -1,11 +1,11 @@
 {
-    "activeFile": "map/map_1.tmx",
+    "activeFile": "",
     "expandedProjectPaths": [
+        "map",
         ".",
         "tuiles map",
         "tuiles map/house",
-        ".idea/inspectionProfiles",
-        "map"
+        ".idea/inspectionProfiles"
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -140,7 +140,6 @@
         }
     },
     "openFiles": [
-        "map/map_1.tmx"
     ],
     "project": "",
     "recentFiles": [
