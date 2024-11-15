@@ -1,9 +1,9 @@
 import pygame, pytmx, pyscroll
 from dataclasses import dataclass
 from Player_pnj.player import NPC
-from monstres.momy import Mommy
-from monstres.slime import Slime
-from monstres.rabbit import Rabbit
+from Scr.Monster.Monsters_entity.momy import Mommy
+from Scr.Monster.Monsters_entity.slime import Slime
+from Scr.Monster.Monsters_entity.rabbit import Rabbit
 import random
 import os
 

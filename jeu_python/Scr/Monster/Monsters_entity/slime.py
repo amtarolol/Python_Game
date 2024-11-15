@@ -1,6 +1,6 @@
 import pygame
 import random
-from monstres.monster import Monster
+from Scr.Monster.Monster import Monster
 import os
 
 current_directory = os.path.dirname(os.path.abspath(__file__))

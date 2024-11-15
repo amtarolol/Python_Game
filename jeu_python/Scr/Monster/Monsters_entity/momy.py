@@ -1,7 +1,6 @@
 import pygame
 import os
-from monstres.monster import Monster
-from Spell.state import Etats
+from Scr.Monster.Monster import Monster
 
 current_directory = os.path.dirname(os.path.abspath(__file__))
 os.chdir(current_directory)
